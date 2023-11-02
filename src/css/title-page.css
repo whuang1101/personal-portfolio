@@ -1,0 +1,72 @@
+.title-page{
+    /* background-color: black; */
+    display: flex;
+    height: 100vh;
+    background-color: rgb(24,26,27);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.title{
+    font-size: 4.0em;
+    color: white;
+}
+.title-color {
+    font-weight: 700;
+    color: #EFDD8D;
+}
+.connections {
+    position: absolute;
+    bottom:10%;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+}
+.linkedin, .github, .email {
+    padding: 1em;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: space-between;
+    gap: 3em;
+}
+.linkedin{
+    background-color: rgb(45,100,188);
+    color: white;
+}
+.linkedin-logo{
+    height: 100%;
+    width: 100%;
+}
+.github{
+    background-color: rgb(46,49,47);
+    color: white;
+}
+.email{
+    background-color: rgb(211,89,92);
+    color: white;
+}
+.github-logo{
+    height: 100%;
+    width: 100%;
+}
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+    gap: 2em;
+}
+.about-me-button, .projects{
+    padding: .5em;
+    border-radius: 1em;
+    font-size: 1.25em;
+    background-color: #F4FDAF;
+    color: black;
+    border: 4px solid rgba(0,0,0)   
+}
+.about-me-button:hover, .projects:hover{
+    background-color: #EFDD8D;
+    cursor: pointer;
+    border: 4px rgba(0,0,0,0.5) solid;
+}

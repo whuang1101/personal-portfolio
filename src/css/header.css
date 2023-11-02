@@ -1,0 +1,77 @@
+
+#root{
+    position: relative;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header{
+    position: fixed;
+    z-index: 3;
+    width: 100%;
+    top: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: none;
+    font-size: 1.2em;
+    opacity: .9;
+}
+header.sticky{
+    background-color: #058ED9;
+}
+nav{
+    width: clamp(70%,800px,90%);
+    padding: .25em;
+    display: flex;
+    justify-content: space-between;
+    color: #FFFFFA;
+}
+.name{
+    flex:2;
+    display: flex;
+    align-items: center;
+    gap: .25em;
+    font-size: 1.5em;
+}
+.about-project{
+    flex: 3;
+    display: flex;
+    justify-content: space-between;
+}
+a{
+    text-decoration: none;
+    
+}
+li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 0.5em;
+    transition: 0.3s;
+    color: white;
+    gap: .25em;
+}
+ul{
+    list-style-type: none;
+    display: flex;
+}
+
+li::before {
+    content: '';
+    position: absolute;
+    width: 0; /* Initially, set the width to 0 */
+    height: 4px; /* Adjust the height and color as needed */
+    background-color: #EFDD8D;
+    bottom: 0;
+    left: 0; /* Start from the left */
+    transition: width 0.3s; /* Add a transition for smooth animation */
+  }
+li:hover::before{
+    width: 100%;
+}

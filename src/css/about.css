@@ -1,0 +1,35 @@
+.about{
+    width: 100%;
+    background-color:rgb(10,34,50);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4em;
+}
+.about-me{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    color: white;
+    flex: 1;
+}
+.about-center{
+    width: clamp(300px, 80%, 1200px);
+    display: flex;
+    justify-content: space-between;
+}
+.about-me-title{
+    font-size: 3em;
+}
+.about-me-content{
+    font-size: 1.3em;
+}
+.me-pic{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+.about-color{
+    color: #F06543;
+}
