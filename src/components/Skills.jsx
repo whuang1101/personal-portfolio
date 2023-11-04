@@ -20,9 +20,12 @@ import canva from "../svg/canva.svg"
 import sourceCode from "../svg/source-code.svg"  
 import framework from "../svg/framework.svg"
 import technology from "../svg/technology.svg"  
-import {motion} from "framer-motion"
-
+import {motion, useInView} from "framer-motion"
+import { useRef } from "react"
 const SkillsPage = () => {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true })
+
     return (
         <div className="skills-page" id="skills">
             <div className="skills-center">
@@ -30,7 +33,13 @@ const SkillsPage = () => {
                 <span style={{color:"white"}}>━━━━━━━</span></h1>
                 <div className="skills-boxes">
                     <div className="skills-box">
-                        <motion.div className="languages" whileHover={{y:"-2.5%"}}>
+                        <motion.div className="languages"
+                        ref={ref}    
+                         style={{
+                            transform: isInView ? "none" : "translateY(-200px)",
+                            opacity: isInView ? 1 : 0,
+                            transition: "all 1s cubic-bezier(0.17, 0.55, 0.55, 1) .5s"
+                          }} >
                             <img src={sourceCode} alt="Source Code" width={"40%"} style={{paddingBottom:"2em"}}/>
                             <h3 className="skill-title">
                                 Languages
@@ -46,7 +55,13 @@ const SkillsPage = () => {
                         </motion.div>
                     </div>
                     <div className="skills-box">
-                            <motion.div className="languages" whileHover={{y:"-2.5%"}}>
+                            <motion.div className="languages"
+                            ref={ref}    
+                             style={{
+                                transform: isInView ? "none" : "translateY(-200px)",
+                                opacity: isInView ? 1 : 0,
+                                transition: "all 1s cubic-bezier(0.17, 0.55, 0.55, 1) .75s"
+                              }} >
                             <img src={framework} alt="Source Code" width={"40%"} style={{paddingBottom:"2em"}}/>
 
                             <h3 className="skill-title">
@@ -66,7 +81,13 @@ const SkillsPage = () => {
                         </motion.div>
                     </div>
                     <div className="skills-box">
-                        <motion.div className="languages" whileHover={{y:"-2.5%"}}>
+                        <motion.div className="languages"
+                        ref={ref}    
+                         style={{
+                            transform: isInView ? "none" : "translateY(-200px)",
+                            opacity: isInView ? 1 : 0,
+                            transition: "all 1s cubic-bezier(0.17, 0.55, 0.55, 1) 1s"
+                          }} >
                             <img src={technology} alt="Source Code" width={"40%"} style={{paddingBottom:"1em"}}/>
 
                             <h3 className="skill-title">

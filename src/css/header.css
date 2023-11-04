@@ -83,11 +83,16 @@ li:hover::before{
     display: flex;
     flex-direction: column;
     display: none;
-}
-.hoverable-element{
-    display: flex;
-    flex: 1;
-}
+}   
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: white;
+    transform-origin: 0%;
+  }
 
 @media screen and (max-width: 1050px){
     .about-project{
@@ -109,13 +114,6 @@ li:hover::before{
     header{
         font-size: 1.5em;
     }
-    .hoverable-element{
-        display: flex;
-        flex: 1;
-        justify-content: center;
-        align-items: center;
-        font-size: 3em;
-    }
     .project-page, .skills-page, .about {
         padding: 0em;
 
@@ -124,15 +122,5 @@ li:hover::before{
         font-size: .8em;
     }
 
-.progress-bar {
-    position: fixed;
-    top: 10;
-    left: 0;
-    right: 0;
-    height: 1000px;
-    background-color: white;
-    transform-origin: 0%;
-    z-index: 5000;
-  }
   
 }

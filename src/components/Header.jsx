@@ -46,10 +46,6 @@ const Header = () =>{
                 </ul>
             </nav>
         </header>
-        <motion.div
-        className="progress-bar"
-        style={{ scaleX: scrollYProgress }}
-      />
         <></>
       </>
     );
