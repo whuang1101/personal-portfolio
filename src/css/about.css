@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     padding: 4em;
+
 }
 .about-me{
     display: flex;
@@ -14,7 +15,7 @@
     flex: 1;
 }
 .about-center{
-    width: clamp(300px, 80%, 1200px);
+    width: clamp(300px, 100%, 1200px);
     display: flex;
     justify-content: space-between;
 }
@@ -32,4 +33,23 @@
 }
 .about-color{
     color: #F06543;
+}
+.selfie{
+    width: 50%;
+}
+
+@media screen and (max-width: 1200px){
+    .selfie{
+        width: 65%;
+    }
+}
+@media screen and (max-width: 800px){
+    .about-center{
+        flex-direction: column;
+        gap: 1em;
+    }
+    .selfie{
+        width: 80%;
+    }
+
 }

@@ -16,8 +16,9 @@ import passport from "../svg/passportjs.svg"
 import { motion } from "framer-motion"
 
 
+
 const ProjectsPage = () => {
-    const allProjects = ["Odin Book", "KeepInTouch", "Photo Tagging", "Members Only", "The Best Blog", "Fervent Fashion"]
+    const allProjects = ["Odin Book", "KeepInTouch", "Pixel Finder", "Members Only", "The Best Blog", "Fervent Fashion"]
     const images = [OdinBook, KeepInTouch, PhotoTagging, MembersOnly, Blog, FerventFashion]
     const description = [
         "Social Media Platform",

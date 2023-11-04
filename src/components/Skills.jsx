@@ -21,6 +21,7 @@ import sourceCode from "../svg/source-code.svg"
 import framework from "../svg/framework.svg"
 import technology from "../svg/technology.svg"  
 import {motion} from "framer-motion"
+
 const SkillsPage = () => {
     return (
         <div className="skills-page" id="skills">
@@ -49,7 +50,7 @@ const SkillsPage = () => {
                             <img src={framework} alt="Source Code" width={"40%"} style={{paddingBottom:"2em"}}/>
 
                             <h3 className="skill-title">
-                                Frameworks/Libraries/Databases
+                                Frameworks/ Libraries/ Databases
                             </h3>
                             <div className="skills">
                                 <div className="skill-icon"><span>React.js</span> <img src={react} alt="react logo" className="icon"/> </div>

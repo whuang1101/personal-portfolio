@@ -7,10 +7,9 @@
     padding: 4em;
 }
 .project-center{
-    width: clamp(300px, 80%, 1200px);
+    width: clamp(300px, 100%, 1200px);
     display: flex;
     flex-direction: column;
-    gap: 2em;
     justify-content: space-between;
 }
 .project-cards{

@@ -8,7 +8,7 @@
 }
 
 .skills-center{
-    width: clamp(300px, 80%, 1200px);
+    width: clamp(300px, 100%, 1200px);
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -16,7 +16,7 @@
 .skills-boxes{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-gap: 5em; /* Adjust the gap between items as needed */
+    grid-gap: 5em;
     justify-content: space-between;
     align-items: center;
 }
@@ -38,6 +38,7 @@
 }
 .skills{
     font-weight: 0;
+    font-size: 1.1em;
 }
 .skill-icon{
     display: flex;

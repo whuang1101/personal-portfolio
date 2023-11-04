@@ -24,7 +24,8 @@ const AboutPage = () => {
             <div className="about-me-content">
               Hey, my name is Wilson Huang. I am a recent graduate from the University of Florida with a B.S. in Biomedical Engineering.
               I am currently looking for a full-time software engineering position. I am passionate about building web applications and learning new technologies.
-              I embarked on a self-taught computer science journey and completing the open source boot camp The Odin Project. In my free time, I enjoy playing games, 
+              I embarked on a self-taught computer science journey and completing the open source boot camp The Odin Project. I am most efficient in the MERN stack
+              but have used my fair share of other stacks as well. In my free time, I enjoy playing games, 
               watching movies, and developing new apps.
             </div>
           </div>
@@ -35,7 +36,7 @@ const AboutPage = () => {
         opacity: isInView ? 1 : 0,
         transition: "all 1s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s"
       }}>
-            <img src={selfie} alt="Selfie"  width={"40%"}style={{borderRadius:"2em"}}/>
+            <img src={selfie} alt="Selfie"  className="selfie"style={{borderRadius:"2em"}}/>
           </div>
         </div>
       </div>
