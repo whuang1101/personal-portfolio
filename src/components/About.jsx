@@ -19,14 +19,14 @@ const AboutPage = () => {
                 transition: "all 1s cubic-bezier(0.17, 0.55, 0.55, 1) 1s"
               }} >
             <div className="about-me-title">
-            <span className="about-color">About</span> <span style={{color:"white"}}>Me</span> <span className="about-color" style={{fontWeight:"bolder"}}>━━━━━━━</span>
+            <span className="about-color">About</span> <span style={{color:"white"}}>Me</span> <span className="about-color" style={{fontWeight:"bolder"}}>━━━━━</span>
             </div>
             <div className="about-me-content">
               Hey, my name is Wilson Huang. I am a recent graduate from the University of Florida with a B.S. in Biomedical Engineering.
               I am currently looking for a full-time software engineering position. I am passionate about building web applications and learning new technologies.
-              I embarked on a self-taught computer science journey and completing the open source boot camp The Odin Project. I am most efficient in the MERN stack
+              I embarked on a self-taught computer science journey and completed the open source boot camp The Odin Project. I am most efficient in the MERN stack
               but have used my fair share of other stacks as well. In my free time, I enjoy playing games, 
-              watching movies, and developing new apps.
+              climbing, and thinking of new app ideas to make.
             </div>
           </div>
           <div className="me-pic"         

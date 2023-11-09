@@ -30,7 +30,7 @@ const SkillsPage = () => {
         <div className="skills-page" id="skills">
             <div className="skills-center">
                 <h1 className="about-me-title"><span style={{color:"white"}}>My </span><span className="about-color">Skills </span>
-                <span style={{color:"white"}}>━━━━━━━</span></h1>
+                <span style={{color:"white"}}>━━━━━</span></h1>
                 <div className="skills-boxes">
                     <div className="skills-box">
                         <motion.div className="languages"
