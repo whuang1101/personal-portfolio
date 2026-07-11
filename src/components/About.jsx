@@ -1,47 +1,23 @@
-import "../css/about.css"
-import selfie from "../assets/IMG_5782.png"
-import { motion, useInView } from 'framer-motion';
-import { useRef } from "react";
-const AboutPage = () => {
-    const ref = useRef(null)
-    const isInView = useInView(ref, { once: true })
+import { motion } from "framer-motion";
+import selfie from "../assets/wilson-headshot.webp";
 
+const AboutPage = () => (
+  <section className="section about-section" id="about">
+    <motion.div className="section-kicker" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}><span>01</span> About</motion.div>
+    <div className="about-grid">
+      <motion.div className="portrait-wrap" initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .7 }}>
+        <div className="portrait-frame"><img src={selfie} alt="Wilson Huang" loading="lazy" /></div>
+        <span className="portrait-note">Engineer by training.<br />Builder by curiosity.</span>
+      </motion.div>
+      <motion.div className="about-copy" initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .3 }} transition={{ duration: .7 }}>
+        <h2>Different disciplines.<br /><em>One builder&apos;s mindset.</em></h2>
+        <p className="lead">I&apos;m Wilson, a Software Engineer at LinkedIn building enterprise APIs and cloud products across Python, React, and Azure.</p>
+        <p>My path started with biomedical engineering at the University of Florida and self-directed full-stack training through The Odin Project. Today, I work on event-driven systems, production reliability, and platform modernization—bringing a curious, systems-minded approach to every product I build.</p>
+        <div className="about-tags"><span>Distributed systems</span><span>Python APIs</span><span>Azure cloud</span><span>Product engineering</span></div>
+        <p className="offscreen-note">Away from the screen, you&apos;ll usually find me climbing, gaming, or sketching out the next app idea.</p>
+      </motion.div>
+    </div>
+  </section>
+);
 
-    return (
-      <div
-       className='about' id="about">
-        <div className="about-center">
-          <div className="about-me"
-              ref={ref}    
-              style={{
-                transform: isInView ? "none" : "translateX(-200px)",
-                opacity: isInView ? 1 : 0,
-                transition: "all 1s cubic-bezier(0.17, 0.55, 0.55, 1) 1s"
-              }} >
-            <div className="about-me-title">
-            <span className="about-color">About</span> <span style={{color:"white"}}>Me</span> <span className="about-color" style={{fontWeight:"bolder"}}>━━━━━</span>
-            </div>
-            <div className="about-me-content">
-              Hey, my name is Wilson Huang. I am a recent graduate from the University of Florida with a B.S. in Biomedical Engineering.
-              I am currently looking for a full-time software engineering position. I am passionate about building web applications and learning new technologies.
-              I embarked on a self-taught computer science journey and completed the open source boot camp The Odin Project. I am most efficient in the MERN stack
-              but have used my fair share of other stacks as well. In my free time, I enjoy playing games, 
-              climbing, and thinking of new app ideas to make.
-            </div>
-          </div>
-          <div className="me-pic"         
-          ref={ref}    
-      style={{
-        transform: isInView ? "none" : "translateX(-200px)",
-        opacity: isInView ? 1 : 0,
-        transition: "all 1s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s"
-      }}>
-            <img src={selfie} alt="Selfie"  className="selfie"style={{borderRadius:"2em"}}/>
-          </div>
-        </div>
-      </div>
-    );
-  };
-  
-  export default AboutPage;
-  
+export default AboutPage;

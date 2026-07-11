@@ -77,13 +77,27 @@ li:hover::before{
 }
 
 .drop-down{
-    height: 100vh;
-    background-color: black;
+    background-color: rgb(24,26,27);
     color: white;
     display: flex;
     flex-direction: column;
     display: none;
-}   
+}
+.menu-button{
+    display: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: .5em;
+}
+.menu-button span{
+    display: block;
+    width: 1.4em;
+    height: 3px;
+    margin: 4px;
+    border-radius: 3px;
+    background: white;
+}
 .progress-bar {
     position: fixed;
     top: 0;
@@ -100,17 +114,16 @@ li:hover::before{
     }
     .drop-down{
         position: fixed;
-        display: none;
-        top: 0;
-        background-color: black;
+        display: flex;
+        top: 3.75em;
         color: white;
         z-index: 100;
         width: 100%;
-        height: 100vh;
-        overflow-y: hidden;
+        height: auto;
         padding: 0;
         margin: 0;
     }
+    .menu-button{ display: block; }
     header{
         font-size: 1.5em;
     }

@@ -1,0 +1,8 @@
+.git
+node_modules
+dist
+output
+tmp
+*.log
+* 2.jsx
+README 2.md

@@ -1,0 +1,16 @@
+services:
+  portfolio:
+    build: .
+    container_name: personal-portfolio
+    restart: unless-stopped
+    env_file:
+      - .env
+    expose:
+      - "8000"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
+    name: odinbook_default

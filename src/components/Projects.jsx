@@ -1,104 +1,47 @@
-import "../css/project.css"
-import OdinBook from "../photos/odin-book.png"
-import KeepInTouch from "../photos/keep-in-touch.png"
-import PhotoTagging from "../photos/photo-tagging.png"
-import MembersOnly from "../photos/members-only.png"
-import Blog from "../photos/blog.png"
-import FerventFashion from "../photos/fervent-fashion.png"
-import react from "../svg/react.svg"
-import node from "../svg/node.svg"
-import express from "../svg/express.svg"
-import javascript from "../svg/javascript.svg"
-import figma from "../svg/figma.svg"
-import mongo from "../svg/mongo.svg"
-import socket from "../svg/socket.svg"
-import passport from "../svg/passportjs.svg"
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import OdinBook from "../photos/odin-book.webp";
+import KeepInTouch from "../photos/keep-in-touch.webp";
+import PhotoTagging from "../photos/photo-tagging.webp";
+import Blog from "../photos/blog.webp";
+import FerventFashion from "../photos/fervent-fashion.webp";
 
+const projects = [
+  { title: "Fervent Fashion", type: "E-commerce", image: FerventFashion, description: "A responsive storefront focused on product browsing and a fluid shopping experience.", stack: ["React", "JavaScript"], demo: "https://earnest-ganache-26ee42.netlify.app/", code: "https://github.com/whuang1101/Shopping-Cart" },
+  { title: "The Best Blog", type: "Publishing platform", image: Blog, description: "A clean content platform supporting the complete create, read, update, and delete workflow.", stack: ["React", "Express", "MongoDB"], demo: "https://main--euphonious-nougat-ad7d5a.netlify.app/", code: "https://github.com/whuang1101/blog_client" },
+  { title: "Pixel Finder", type: "Interactive game", image: PhotoTagging, description: "A visual search game that turns photo tagging into a playful full-stack challenge.", stack: ["React", "Node", "MongoDB"], demo: "https://incandescent-froyo-150a8b.netlify.app/", code: "https://github.com/whuang1101/photo-tagging" },
+  { title: "KeepInTouch", type: "Real-time messenger", image: KeepInTouch, description: "A live messaging app designed around fast conversations and connected experiences.", stack: ["React", "Socket.io", "Express", "MongoDB"], demo: "https://mellow-sfogliatella-52d786.netlify.app/", code: "https://github.com/whuang1101/KeepInTouch" },
+  { title: "Odin Book", type: "Social platform", image: OdinBook, description: "A full-stack social experience with profiles, posts, and authenticated interactions.", stack: ["React", "Node", "MongoDB", "Passport"], demo: "https://lustrous-dodol-b9be51.netlify.app/", code: "https://github.com/whuang1101/OdinBook" },
+];
 
-
-const ProjectsPage = () => {
-    const allProjects = ["Odin Book", "KeepInTouch", "Pixel Finder", "Members Only", "The Best Blog", "Fervent Fashion"]
-    const images = [OdinBook, KeepInTouch, PhotoTagging, MembersOnly, Blog, FerventFashion]
-    const description = [
-        "Social Media Platform",
-        "Messenger App",
-        "Where's the Pokemon? Game",
-        "Message Board",
-        "Blog with CRUD functionality",
-        "E-Commerce Website",
-    ]
-    const made_with = [[mongo,express,react,node, passport,javascript,figma],
-    [mongo,express,react,node,javascript, passport,figma,socket],
-    [mongo,express,react,node,javascript],
-    [mongo,express,react,node,javascript,passport],
-    [mongo,express,react,node,javascript,figma],
-    [react,javascript]
-]
-    const demo = ["https://lustrous-dodol-b9be51.netlify.app/",
-"https://mellow-sfogliatella-52d786.netlify.app/",
-"https://incandescent-froyo-150a8b.netlify.app/",
-"https://members-only-production-dc78.up.railway.app/",
-"https://main--euphonious-nougat-ad7d5a.netlify.app/",
-"https://earnest-ganache-26ee42.netlify.app/"
-]
-    const liveCode = ["https://github.com/whuang1101/OdinBook",
-"https://github.com/whuang1101/KeepInTouch",
-"https://github.com/whuang1101/photo-tagging",
-"https://github.com/whuang1101/members-only",
-"https://github.com/whuang1101/blog_client",
-"https://github.com/whuang1101/Shopping-Cart"
-]
-    return (
-        <div className="project-page" id="project">
-            <div className="project-center">
-                <div className="about-me-title">
-                    <span className="about-color">My</span> <span style={{color:"white"}}>Projects</span> <span className="about-color" style={{fontWeight:"bolder"}}>━━━━━━━</span>
-                </div>
-                <div className="project-cards">
-                {allProjects.map((element, index) => (
-                <div className="project-card" key={element}>
-                    <img src={images[index]} alt={element} width={"100%"} height={"20%"} className="project-image"/>
-                    <div className="project-info">
-                        <h2 className="project-card-title">
-                         {element}
-                        </h2>
-                        <div className="project-card-description">
-                        {description[index]}
-                        </div>
-                        <div className="project-card-make">
-                            Made With:
-                            {made_with[index].map((element) => (
-                                    <span key={element}>
-                                        <img src={element} alt="python logo" className="smaller-icon"/>
-                                    </span>
-                            ))}
-                        </div>
-                        <div className="buttons">
-                            <a href={demo[index]}>
-                                <motion.button className="demo"
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.9 }}  
-                                initial={{ scale: 1 }} >
-                                    Demo
-                                </motion.button>
-                            </a>
-                            <a href={liveCode[index]}>
-                                <motion.button className="live-code"
-                                whileHover={{ scale: 1.1 }} 
-                                whileTap={{ scale: 0.9 }}  
-                                initial={{ scale: 1 }} >
-                                    Live Code
-                                </motion.button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                ))}
-
-                </div>
-            </div>
+const ProjectsPage = () => (
+  <section className="section projects-section" id="project">
+    <div className="section-kicker"><span>03</span> Selected work</div>
+    <div className="section-heading"><h2>A timeline of<br /><em>things I&apos;ve built.</em></h2><p>Each project marks a step in my path from learning the fundamentals to designing complete digital products.</p></div>
+    <div className="projects-grid timeline">
+      {projects.map((project, index) => (
+        <motion.article className="project-card" key={project.title} initial={{ opacity: 0, x: index % 2 ? 42 : -42 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .22 }} transition={{ duration: .65, ease: [.22, 1, .36, 1] }}>
+          <span className="timeline-node" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+          <a className="project-visual" href={project.demo} target="_blank" rel="noreferrer"><img src={project.image} alt={`${project.title} interface`} loading="lazy" /><span>View project ↗</span></a>
+          <div className="project-meta"><span>{String(index + 1).padStart(2, "0")} / {project.type}</span><h3>{project.title}</h3><p>{project.description}</p>
+            <div className="project-footer"><div>{project.stack.map(item => <span key={item}>{item}</span>)}</div><a href={project.code} target="_blank" rel="noreferrer" aria-label={`${project.title} source code`}>GitHub ↗</a></div>
+          </div>
+        </motion.article>
+      ))}
+      <motion.article className="project-card career-milestone" initial={{ opacity: 0, x: 42 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .22 }} transition={{ duration: .7, ease: [.22, 1, .36, 1] }}>
+        <span className="timeline-node career-node" aria-hidden="true">06</span>
+        <div className="career-visual" aria-hidden="true">
+          <div className="linkedin-mark">in</div>
+          <div className="offer-lines"><i /><i /><i /></div>
+          <span>Offer accepted</span>
+          <strong>REACH</strong>
+          <small>LinkedIn · 2025</small>
         </div>
-    )
-}
-export default ProjectsPage
+        <div className="project-meta career-meta"><span>06 / Career milestone · 2025 — Present</span><h3>LinkedIn REACH</h3><p>My self-taught journey led to an offer from LinkedIn&apos;s REACH program. That opportunity became my path into LinkedIn, where I continue today as a Software Engineer building enterprise APIs, event-driven systems, and cloud infrastructure.</p>
+          <div className="project-footer"><div><span>FastAPI</span><span>React</span><span>Azure</span><span>Distributed systems</span></div><strong className="present-badge"><i />Still building here</strong></div>
+        </div>
+      </motion.article>
+    </div>
+  </section>
+);
+
+export default ProjectsPage;
