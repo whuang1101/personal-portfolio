@@ -12,7 +12,7 @@ const FirstPage = ({ onThemeToggle, cosmicTheme }) => (
       <motion.h1 variants={reveal}>I turn ambitious ideas into <em>human</em> digital products.</motion.h1>
       <motion.p variants={reveal}>Software engineer with a biomedical engineering lens—building enterprise APIs, event-driven systems, and reliable cloud products with Python, React, and Azure.</motion.p>
       <motion.div className="hero-actions" variants={reveal}>
-        <Link className="primary-button" to="project" smooth duration={400} offset={-60}>Explore my work <span>↘</span></Link>
+        <Link className="primary-button" to="experience" smooth duration={400} offset={-60}>Explore my experience <span>↘</span></Link>
         <motion.a className="resume-hero" href="/Wilson-Huang-Resume.pdf" target="_blank" rel="noreferrer" whileHover={{ y: -4 }} whileTap={{ scale: .96 }}>
           <span className="resume-icon"><i /><i /><i /></span>
           <span><small>Career snapshot</small><strong>View my résumé</strong></span>
@@ -23,7 +23,7 @@ const FirstPage = ({ onThemeToggle, cosmicTheme }) => (
     <motion.aside className="hero-card" initial={{ opacity: 0, scale: .92, rotate: 3 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ duration: .8, delay: .35 }}>
       <div className="hero-card-top"><span>LinkedIn · Software Engineer</span><span>2025 — now</span></div>
       <div className="code-orbit"><div className="orbit"><span>React</span><span>Python</span><span>Azure</span></div><motion.button className="code-core" type="button" onClick={onThemeToggle} aria-label="Toggle portfolio color theme" title="There is more here" animate={{ rotate: cosmicTheme ? 360 : 0, scale: cosmicTheme ? [1, 1.08, 1] : 1 }} transition={{ duration: .7, ease: "easeInOut" }} whileHover={{ scale: 1.08 }} whileTap={{ scale: .92 }}>&lt;WH /&gt;</motion.button></div>
-      <div className="hero-stats"><div><strong>5</strong><span>featured builds</span></div><div><strong>JS + PY</strong><span>core languages</span></div></div>
+      <div className="hero-stats"><div><strong>2025→</strong><span>at LinkedIn</span></div><div><strong>PY + AZ</strong><span>backend + cloud</span></div></div>
     </motion.aside>
     <div className="scroll-cue"><span>Scroll to discover</span><i /></div>
   </section>

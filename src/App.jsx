@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import IntroGame from "./components/IntroGame.jsx";
 import Header from "./components/Header.jsx";
 import FirstPage from "./components/FirstPage.jsx";
+import ExperiencePage from "./components/Experience.jsx";
 import AboutPage from "./components/About.jsx";
 import SkillsPage from "./components/Skills.jsx";
 import ProjectsPage from "./components/Projects.jsx";
@@ -63,7 +64,7 @@ const App = () => {
     <AnimatePresence>{themeNotice && <motion.div className="theme-toast" role="status" initial={{ opacity: 0, y: 18, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10 }}>{themeNotice}<span aria-hidden="true">✦</span></motion.div>}</AnimatePresence>
     <motion.div className="portfolio-shell" initial={false} animate={{ opacity: entered ? 1 : 0 }} aria-hidden={!entered}>
       <Header onContact={() => setContactOpen(true)} />
-      <main><FirstPage onThemeToggle={toggleTheme} cosmicTheme={cosmicTheme} /><AboutPage /><SkillsPage /><ProjectsPage /></main>
+      <main><FirstPage onThemeToggle={toggleTheme} cosmicTheme={cosmicTheme} /><AboutPage /><ExperiencePage /><ProjectsPage /><SkillsPage /></main>
       <footer><span>Designed & built by Wilson Huang</span><button type="button" onClick={() => setContactOpen(true)}>Let&apos;s build something →</button></footer>
     </motion.div>
   </div>;

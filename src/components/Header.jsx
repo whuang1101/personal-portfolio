@@ -5,8 +5,9 @@ import { Link } from "react-scroll";
 const links = [
   ["home", "Home"],
   ["about", "About"],
-  ["skills", "Toolkit"],
+  ["experience", "Experience"],
   ["project", "Work"],
+  ["skills", "Toolkit"],
 ];
 
 // eslint-disable-next-line react/prop-types
@@ -44,7 +45,7 @@ const Header = ({ onContact }) => {
                 <span>0{index + 1}</span>{label}
               </Link>
             ))}
-            <a className="resume-mobile" href="/Wilson-Huang-Resume.pdf" target="_blank" rel="noreferrer"><span>05</span>Résumé <i>↗</i></a>
+            <a className="resume-mobile" href="/Wilson-Huang-Resume.pdf" target="_blank" rel="noreferrer"><span>06</span>Résumé <i>↗</i></a>
           </motion.div>
         )}
       </AnimatePresence>

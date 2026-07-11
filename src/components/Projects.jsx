@@ -15,8 +15,8 @@ const projects = [
 
 const ProjectsPage = () => (
   <section className="section projects-section" id="project">
-    <div className="section-kicker"><span>03</span> Selected work</div>
-    <div className="section-heading"><h2>A timeline of<br /><em>things I&apos;ve built.</em></h2><p>Each project marks a step in my path from learning the fundamentals to designing complete digital products.</p></div>
+    <div className="section-kicker"><span>03</span> Selected projects</div>
+    <div className="section-heading"><h2>Products built<br /><em>from curiosity.</em></h2><p>Independent builds that show how I explore product ideas, learn new systems, and carry an experience from interface to backend.</p></div>
     <div className="projects-grid timeline">
       {projects.map((project, index) => (
         <motion.article className="project-card" key={project.title} initial={{ opacity: 0, x: index % 2 ? 42 : -42 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .22 }} transition={{ duration: .65, ease: [.22, 1, .36, 1] }}>
@@ -27,19 +27,6 @@ const ProjectsPage = () => (
           </div>
         </motion.article>
       ))}
-      <motion.article className="project-card career-milestone" initial={{ opacity: 0, x: 42 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .22 }} transition={{ duration: .7, ease: [.22, 1, .36, 1] }}>
-        <span className="timeline-node career-node" aria-hidden="true">06</span>
-        <div className="career-visual" aria-hidden="true">
-          <div className="linkedin-mark">in</div>
-          <div className="offer-lines"><i /><i /><i /></div>
-          <span>Offer accepted</span>
-          <strong>REACH</strong>
-          <small>LinkedIn · 2025</small>
-        </div>
-        <div className="project-meta career-meta"><span>06 / Career milestone · 2025 — Present</span><h3>LinkedIn REACH</h3><p>My self-taught journey led to an offer from LinkedIn&apos;s REACH program. That opportunity became my path into LinkedIn, where I continue today as a Software Engineer building enterprise APIs, event-driven systems, and cloud infrastructure.</p>
-          <div className="project-footer"><div><span>FastAPI</span><span>React</span><span>Azure</span><span>Distributed systems</span></div><strong className="present-badge"><i />Still building here</strong></div>
-        </div>
-      </motion.article>
     </div>
   </section>
 );
