@@ -3,11 +3,11 @@ import OdinBook from "../photos/odin-book.webp";
 import KeepInTouch from "../photos/keep-in-touch.webp";
 import PhotoTagging from "../photos/photo-tagging.webp";
 import Blog from "../photos/blog.webp";
-import FerventFashion from "../photos/fervent-fashion.webp";
+import LumenPreview from "../photos/fervent-fashion.webp";
 
 const projects = [
-  { title: "Fervent Fashion", type: "E-commerce", image: FerventFashion, description: "A responsive storefront focused on product browsing and a fluid shopping experience.", stack: ["React", "JavaScript"], demo: "https://earnest-ganache-26ee42.netlify.app/", code: "https://github.com/whuang1101/Shopping-Cart" },
-  { title: "The Best Blog", type: "Publishing platform", image: Blog, description: "A clean content platform supporting the complete create, read, update, and delete workflow.", stack: ["React", "Express", "MongoDB"], demo: "https://main--euphonious-nougat-ad7d5a.netlify.app/", code: "https://github.com/whuang1101/blog_client" },
+  { title: "Lumen", type: "Modern storefront", image: LumenPreview, description: "An editorial React storefront with live product data, responsive product browsing, detail pages, and a complete client-side shopping bag.", stack: ["React 18", "React Router", "Vite", "Fake Store API"], demo: "https://earnest-ganache-26ee42.netlify.app/", code: "https://github.com/whuang1101/Shopping-Cart" },
+  { title: "The Journal", type: "Full-stack publishing", image: Blog, description: "A responsive publishing platform with public stories and comments, plus JWT-protected tools for creating, editing, and managing posts.", stack: ["React", "Express", "MongoDB", "JWT"], demo: "https://main--euphonious-nougat-ad7d5a.netlify.app/", code: "https://github.com/whuang1101/blog_client" },
   { title: "Pixel Finder", type: "Interactive game", image: PhotoTagging, description: "A visual search game that turns photo tagging into a playful full-stack challenge.", stack: ["React", "Node", "MongoDB"], demo: "https://incandescent-froyo-150a8b.netlify.app/", code: "https://github.com/whuang1101/photo-tagging" },
   { title: "KeepInTouch", type: "Real-time messenger", image: KeepInTouch, description: "A live messaging app designed around fast conversations and connected experiences.", stack: ["React", "Socket.io", "Express", "MongoDB"], demo: "https://mellow-sfogliatella-52d786.netlify.app/", code: "https://github.com/whuang1101/KeepInTouch" },
   { title: "Odin Book", type: "Social platform", image: OdinBook, description: "A full-stack social experience with profiles, posts, and authenticated interactions.", stack: ["React", "Node", "MongoDB", "Passport"], demo: "https://lustrous-dodol-b9be51.netlify.app/", code: "https://github.com/whuang1101/OdinBook" },

@@ -3,7 +3,8 @@ import { Link } from "react-scroll";
 
 const reveal = { hidden: { opacity: 0, y: 28 }, visible: { opacity: 1, y: 0 } };
 
-const FirstPage = () => (
+// eslint-disable-next-line react/prop-types
+const FirstPage = ({ onThemeToggle, cosmicTheme }) => (
   <section className="hero" id="home">
     <div className="aurora aurora-one" /><div className="aurora aurora-two" />
     <motion.div className="hero-copy" initial="hidden" animate="visible" transition={{ staggerChildren: 0.12 }}>
@@ -21,7 +22,7 @@ const FirstPage = () => (
     </motion.div>
     <motion.aside className="hero-card" initial={{ opacity: 0, scale: .92, rotate: 3 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={{ duration: .8, delay: .35 }}>
       <div className="hero-card-top"><span>LinkedIn · Software Engineer</span><span>2025 — now</span></div>
-      <div className="code-orbit"><div className="orbit"><span>React</span><span>Python</span><span>Azure</span></div><strong>&lt;WH /&gt;</strong></div>
+      <div className="code-orbit"><div className="orbit"><span>React</span><span>Python</span><span>Azure</span></div><motion.button className="code-core" type="button" onClick={onThemeToggle} aria-label="Toggle portfolio color theme" title="There is more here" animate={{ rotate: cosmicTheme ? 360 : 0, scale: cosmicTheme ? [1, 1.08, 1] : 1 }} transition={{ duration: .7, ease: "easeInOut" }} whileHover={{ scale: 1.08 }} whileTap={{ scale: .92 }}>&lt;WH /&gt;</motion.button></div>
       <div className="hero-stats"><div><strong>5</strong><span>featured builds</span></div><div><strong>JS + PY</strong><span>core languages</span></div></div>
     </motion.aside>
     <div className="scroll-cue"><span>Scroll to discover</span><i /></div>
