@@ -6,6 +6,12 @@ Built with React, Vite, Framer Motion, and React Scroll. The portfolio highlight
 
 ## Run locally
 
+Node.js 22 is required. If you use `nvm`, activate the pinned runtime first:
+
+```bash
+nvm use
+```
+
 ```bash
 npm install
 npm run dev
