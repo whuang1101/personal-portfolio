@@ -15,15 +15,35 @@ const projects = [
 
 const ProjectsPage = () => (
   <section className="section projects-section" id="project">
-    <div className="section-kicker"><span>03</span> Selected projects</div>
-    <div className="section-heading"><h2>Products built<br /><em>from curiosity.</em></h2><p>Independent builds that show how I explore product ideas, learn new systems, and carry an experience from interface to backend.</p></div>
-    <div className="projects-grid timeline">
+    <div className="section-kicker"><span>03</span> Selected work / Project journal</div>
+    <div className="section-heading projects-heading">
+      <h2>Experiments that became<br /><em>working products.</em></h2>
+      <p>Five independent builds tracing my path from full-stack fundamentals to more considered product engineering.</p>
+    </div>
+    <div className="project-route" aria-hidden="true"><span>START</span><i /><span>05 BUILDS</span></div>
+    <div className="projects-timeline">
       {projects.map((project, index) => (
-        <motion.article className="project-card" key={project.title} initial={{ opacity: 0, x: index % 2 ? 42 : -42 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .22 }} transition={{ duration: .65, ease: [.22, 1, .36, 1] }}>
-          <span className="timeline-node" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-          <a className="project-visual" href={project.demo} target="_blank" rel="noreferrer"><img src={project.image} alt={`${project.title} interface`} loading="lazy" /><span>View project ↗</span></a>
-          <div className="project-meta"><span>{String(index + 1).padStart(2, "0")} / {project.type}</span><h3>{project.title}</h3><p>{project.description}</p>
-            <div className="project-footer"><div>{project.stack.map(item => <span key={item}>{item}</span>)}</div><a href={project.code} target="_blank" rel="noreferrer" aria-label={`${project.title} source code`}>GitHub ↗</a></div>
+        <motion.article className="project-card" key={project.title} initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ duration: .65, ease: [.22, 1, .36, 1] }}>
+          {index % 2 === 0 && (
+            <span className="timeline-node" aria-hidden="true">
+              <i />{index === projects.length - 1 ? "05" : `${String(index + 1).padStart(2, "0")}–${String(index + 2).padStart(2, "0")}`}
+            </span>
+          )}
+          <a className="project-visual" href={project.demo} target="_blank" rel="noreferrer" aria-label={`Open live ${project.title} project`}>
+            <img src={project.image} alt={`${project.title} interface`} loading="lazy" />
+            <span>Open live build <b>↗</b></span>
+          </a>
+          <div className="project-meta">
+            <div className="project-index"><span>{String(index + 1).padStart(2, "0")} / 05</span><span>{project.type}</span></div>
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+            <div className="project-footer">
+              <div>{project.stack.map((item) => <span key={item}>{item}</span>)}</div>
+              <nav aria-label={`${project.title} links`}>
+                <a href={project.demo} target="_blank" rel="noreferrer">Live ↗</a>
+                <a href={project.code} target="_blank" rel="noreferrer">Source ↗</a>
+              </nav>
+            </div>
           </div>
         </motion.article>
       ))}

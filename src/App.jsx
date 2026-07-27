@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import IntroGame from "./components/IntroGame.jsx";
 import Header from "./components/Header.jsx";
 import FirstPage from "./components/FirstPage.jsx";
 import ExperiencePage from "./components/Experience.jsx";
@@ -10,7 +9,6 @@ import ProjectsPage from "./components/Projects.jsx";
 import ContactModal from "./components/ContactModal.jsx";
 
 const App = () => {
-  const [entered, setEntered] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const [cosmicTheme, setCosmicTheme] = useState(() => {
     try {
@@ -58,16 +56,49 @@ const App = () => {
     };
   }, [toggleTheme]);
 
-  return <div className={cosmicTheme ? "app-shell theme-cosmic" : "app-shell"}>
-    <AnimatePresence>{!entered && <IntroGame onEnter={() => setEntered(true)} />}</AnimatePresence>
-    <AnimatePresence>{contactOpen && <ContactModal onClose={() => setContactOpen(false)} />}</AnimatePresence>
-    <AnimatePresence>{themeNotice && <motion.div className="theme-toast" role="status" initial={{ opacity: 0, y: 18, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10 }}>{themeNotice}<span aria-hidden="true">✦</span></motion.div>}</AnimatePresence>
-    <motion.div className="portfolio-shell" initial={false} animate={{ opacity: entered ? 1 : 0 }} aria-hidden={!entered}>
-      <Header onContact={() => setContactOpen(true)} />
-      <main><FirstPage onThemeToggle={toggleTheme} cosmicTheme={cosmicTheme} /><AboutPage /><ExperiencePage /><ProjectsPage /><SkillsPage /></main>
-      <footer><span>Designed & built by Wilson Huang</span><button type="button" onClick={() => setContactOpen(true)}>Let&apos;s build something →</button></footer>
-    </motion.div>
-  </div>;
+  return (
+    <div className={cosmicTheme ? "app-shell theme-cosmic" : "app-shell"}>
+      <a className="skip-link" href="#main-content">Skip to content</a>
+      <div className="ambient-contours" aria-hidden="true">
+        <i /><i /><i />
+      </div>
+      <AnimatePresence>{contactOpen && <ContactModal onClose={() => setContactOpen(false)} />}</AnimatePresence>
+      <AnimatePresence>
+        {themeNotice && (
+          <motion.div
+            className="theme-toast"
+            role="status"
+            initial={{ opacity: 0, y: 18, scale: .96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10 }}
+          >
+            {themeNotice}<span aria-hidden="true">✦</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div className="portfolio-shell">
+        <Header onContact={() => setContactOpen(true)} />
+        <main id="main-content">
+          <FirstPage onThemeToggle={toggleTheme} cosmicTheme={cosmicTheme} />
+          <AboutPage />
+          <ExperiencePage />
+          <ProjectsPage />
+          <SkillsPage />
+        </main>
+        <footer className="site-footer">
+          <div>
+            <span className="footer-index">05 / CONTACT</span>
+            <h2>Have a route in mind?<br /><em>Let&apos;s map it.</em></h2>
+          </div>
+          <div className="footer-actions">
+            <button type="button" onClick={() => setContactOpen(true)}>Start a conversation <span>↗</span></button>
+            <a href="/Wilson-Huang-Resume.pdf" target="_blank" rel="noreferrer">View résumé ↗</a>
+          </div>
+          <small>Designed &amp; built by Wilson Huang · 2026</small>
+        </footer>
+      </div>
+    </div>
+  );
 };
 
 export default App;
