@@ -1508,12 +1508,6 @@ main {
   transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s;
 }
 
-/* Phone screenshots are portrait; framed at 2:1 the default centre crop lands on empty
-   space, so bias the crop up to the primary UI. */
-.project-visual img[data-shape="app"] {
-  object-position: 50% 36%;
-}
-
 .project-visual > span {
   position: absolute;
   right: 15px;
