@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link } from "react-scroll";
-
-const links = [
-  ["home", "Index"],
-  ["about", "About"],
-  ["experience", "Experience"],
-  ["project", "Work"],
-  ["skills", "Toolkit"],
-];
+import { NAV_SECTIONS, SECTIONS, scrollToSection } from "../lib/sections.js";
 
 // eslint-disable-next-line react/prop-types
-const Header = ({ onContact }) => {
+const Header = ({ onContact, activeIndex }) => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  // The footer has no nav entry, so the last section that does stays lit rather than
+  // leaving the whole nav unhighlighted at the bottom of the page.
+  const activeId = SECTIONS.slice(0, activeIndex + 1).reverse().find((section) => section.nav)?.id;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -21,18 +16,29 @@ const Header = ({ onContact }) => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const jump = (selector) => () => {
+    setOpen(false);
+    scrollToSection(selector);
+  };
+
   return (
     <header className={scrolled ? "site-header scrolled" : "site-header"}>
       <nav className="nav-shell" aria-label="Main navigation">
-        <Link className="brand" to="home" smooth duration={220} aria-label="Wilson Huang, back to top">
+        <button className="brand" type="button" onClick={jump("#home")} aria-label="Wilson Huang, back to top">
           <span className="brand-mark">&lt;WH /&gt;</span>
           <span className="brand-copy"><strong>Wilson Huang</strong><small>Software Engineer</small></span>
-        </Link>
+        </button>
         <div className="desktop-nav">
-          {links.map(([to, label]) => (
-            <Link key={to} to={to} smooth duration={220} offset={-64} spy activeClass="active">
-              {label}
-            </Link>
+          {NAV_SECTIONS.map((section) => (
+            <button
+              key={section.id}
+              type="button"
+              className={section.id === activeId ? "active" : undefined}
+              aria-current={section.id === activeId ? "true" : undefined}
+              onClick={jump(section.selector)}
+            >
+              {section.nav}
+            </button>
           ))}
         </div>
         <div className="nav-actions">
@@ -46,10 +52,10 @@ const Header = ({ onContact }) => {
       <AnimatePresence>
         {open && (
           <motion.div className="mobile-nav" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
-            {links.map(([to, label], index) => (
-              <Link key={to} to={to} smooth duration={220} offset={-60} onClick={() => setOpen(false)}>
-                <span>0{index + 1}</span>{label}
-              </Link>
+            {NAV_SECTIONS.map((section, index) => (
+              <button key={section.id} type="button" onClick={jump(section.selector)}>
+                <span>0{index + 1}</span>{section.nav}
+              </button>
             ))}
             <a className="resume-mobile" href="/Wilson-Huang-Resume.pdf" target="_blank" rel="noreferrer"><span>06</span>Résumé <i>↗</i></a>
             <button type="button" onClick={() => { setOpen(false); onContact(); }}>Start a conversation ↗</button>

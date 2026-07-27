@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "./components/Header.jsx";
+import TraverseRail from "./components/TraverseRail.jsx";
 import FirstPage from "./components/FirstPage.jsx";
 import ExperiencePage from "./components/Experience.jsx";
 import AboutPage from "./components/About.jsx";
 import SkillsPage from "./components/Skills.jsx";
 import ProjectsPage from "./components/Projects.jsx";
 import ContactModal from "./components/ContactModal.jsx";
+import useActiveSection from "./hooks/useActiveSection.js";
 
 const App = () => {
+  const activeSection = useActiveSection();
   const [contactOpen, setContactOpen] = useState(false);
   const [cosmicTheme, setCosmicTheme] = useState(() => {
     try {
@@ -76,8 +79,9 @@ const App = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      <TraverseRail activeIndex={activeSection} />
       <div className="portfolio-shell">
-        <Header onContact={() => setContactOpen(true)} />
+        <Header onContact={() => setContactOpen(true)} activeIndex={activeSection} />
         <main id="main-content">
           <FirstPage onThemeToggle={toggleTheme} cosmicTheme={cosmicTheme} />
           <AboutPage />
@@ -94,6 +98,9 @@ const App = () => {
             <button type="button" onClick={() => setContactOpen(true)}>Start a conversation <span>↗</span></button>
             <a href="/Wilson-Huang-Resume.pdf" target="_blank" rel="noreferrer">View résumé ↗</a>
           </div>
+          <nav className="footer-links" aria-label="Elsewhere">
+            <a href="https://github.com/whuang1101" target="_blank" rel="noreferrer">GitHub ↗</a>
+          </nav>
           <small>Designed &amp; built by Wilson Huang · 2026</small>
         </footer>
       </div>

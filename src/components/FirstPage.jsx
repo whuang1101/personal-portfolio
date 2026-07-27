@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { Link } from "react-scroll";
 import InteractiveField from "./InteractiveField.jsx";
+import { scrollToSection } from "../lib/sections.js";
 
 const reveal = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } };
 
@@ -33,7 +33,7 @@ const FirstPage = ({ onThemeToggle, cosmicTheme }) => (
       <motion.h1 variants={reveal}>Engineering reliable systems.<br /><em>Exploring better routes.</em></motion.h1>
       <motion.p variants={reveal}>I&apos;m Wilson, a software engineer building enterprise APIs, event-driven workflows, and dependable cloud products across Python, React, and Azure.</motion.p>
       <motion.div className="hero-actions" variants={reveal}>
-        <Link className="primary-button" to="experience" smooth duration={260} offset={-60}>Follow the career route <span>↘</span></Link>
+        <button className="primary-button" type="button" onClick={() => scrollToSection("#experience")}>Follow the career route <span>↘</span></button>
         <a className="text-link" href="/Wilson-Huang-Resume.pdf" target="_blank" rel="noreferrer">Download résumé <span>↗</span></a>
       </motion.div>
     </motion.div>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio.172.206.26.66.nip.io/sitemap.xml

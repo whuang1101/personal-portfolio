@@ -16,7 +16,7 @@ const SkillsPage = () => (
     </div>
     <div className="skill-grid">
       {groups.map((group, index) => (
-        <motion.article key={group.title} className="skill-panel" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * .08 }}>
+        <motion.article key={group.title} className="skill-panel" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15, margin: "0px 0px -10% 0px" }} transition={{ delay: index * .04 }}>
           <header><span>{group.number}</span><small>CAPABILITY</small></header>
           <h3>{group.title}</h3>
           <strong>{group.featured}</strong>
@@ -24,7 +24,7 @@ const SkillsPage = () => (
         </motion.article>
       ))}
     </div>
-    <motion.aside className="ai-workflow" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .35 }} transition={{ duration: .6 }}>
+    <motion.aside className="ai-workflow" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15, margin: "0px 0px -10% 0px" }} transition={{ duration: .6 }}>
       <span className="ai-mark" aria-hidden="true">AI</span>
       <div className="ai-workflow-title"><small>ASSISTED ENGINEERING</small><strong>Codex + Claude</strong></div>
       <p>I use Codex and Claude to plan, build, debug, and refine personal projects while keeping architecture and implementation decisions grounded in engineering fundamentals.</p>

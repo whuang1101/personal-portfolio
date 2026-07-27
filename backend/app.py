@@ -83,11 +83,23 @@ def contact(payload: ContactRequest, request: Request) -> dict[str, str]:
     return {"status": "accepted", "message": "Your message was sent."}
 
 
+# Paths that must 404 rather than fall through to the SPA shell. Serving index.html
+# with a 200 for these made every unknown URL — including /robots.txt and stray API
+# calls — look like a real page to crawlers.
+NON_SPA_PREFIXES = ("api/", "assets/")
+NON_SPA_SUFFIXES = (
+    ".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg", ".ico", ".pdf",
+    ".css", ".js", ".map", ".json", ".txt", ".xml", ".webmanifest",
+)
+
+
 @app.get("/{path:path}", include_in_schema=False)
 def site(path: str) -> FileResponse:
     requested = (DIST_DIR / path).resolve()
     if path and requested.is_relative_to(DIST_DIR.resolve()) and requested.is_file():
         return FileResponse(requested)
+    if path.startswith(NON_SPA_PREFIXES) or path.endswith(NON_SPA_SUFFIXES):
+        raise HTTPException(status_code=404, detail="Not found.")
     index = DIST_DIR / "index.html"
     if not index.is_file():
         raise HTTPException(status_code=503, detail="Frontend build is unavailable.")

@@ -50,7 +50,7 @@ const earlierChapters = [
 
 const ExperiencePage = () => (
   <section className="section experience-section" id="experience">
-    <motion.div className="section-kicker" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+    <motion.div className="section-kicker" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, amount: 0.15, margin: "0px 0px -10% 0px" }}>
       <span>02</span> Primary route / Experience
     </motion.div>
     <div className="section-heading experience-heading">
@@ -65,7 +65,7 @@ const ExperiencePage = () => (
           <svg viewBox="0 0 220 690">
             <path className="career-contour" d="M-20 95c58-58 137-43 167 10s90 70 118 25M-34 134c72-55 139-37 170 17s83 62 119 22M-15 510c63-53 132-36 168 17s79 64 123 22M-31 551c73-52 143-31 173 21s76 57 125 18" />
             <path className="career-route-shadow" d="M65 635C35 550 115 503 79 414s74-120 49-211S181 87 171 43" />
-            <motion.path className="career-route-line" d="M65 635C35 550 115 503 79 414s74-120 49-211S181 87 171 43" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true, amount: .2 }} transition={{ duration: 1.7, ease: "easeInOut" }} />
+            <motion.path className="career-route-line" d="M65 635C35 550 115 503 79 414s74-120 49-211S181 87 171 43" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true, amount: 0.15, margin: "0px 0px -10% 0px" }} transition={{ duration: 1.7, ease: "easeInOut" }} />
             <circle cx="65" cy="635" r="5" />
             <circle cx="79" cy="414" r="5" />
             <circle cx="128" cy="203" r="5" />
@@ -76,7 +76,7 @@ const ExperiencePage = () => (
       </aside>
 
       <div className="experience-content">
-        <motion.article className="current-role" initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .7, ease: [.22, 1, .36, 1] }}>
+        <motion.article className="current-role" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15, margin: "0px 0px -10% 0px" }} transition={{ duration: .7, ease: [.22, 1, .36, 1] }}>
           <header className="role-header">
             <div className="current-signal"><i />CURRENT CHAPTER</div>
             <span>FEB 2025 — PRESENT</span>
@@ -92,7 +92,7 @@ const ExperiencePage = () => (
           <p className="role-summary">I build production systems that connect teams and platforms—from REST APIs and authorization to event-driven delivery, cloud migrations, and modern React interfaces.</p>
           <div className="experience-highlights">
             {highlights.map((highlight, index) => (
-              <motion.article key={highlight.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * .07 }}>
+              <motion.article key={highlight.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15, margin: "0px 0px -10% 0px" }} transition={{ delay: index * .04 }}>
                 <span>{highlight.number}</span>
                 <small>{highlight.eyebrow}</small>
                 <h4>{highlight.title}</h4>
@@ -109,7 +109,7 @@ const ExperiencePage = () => (
         <div className="route-ledger">
           <div className="ledger-heading"><span>EARLIER CHAPTERS</span><span>FOUNDATION / 03 ENTRIES</span></div>
           {earlierChapters.map((chapter, index) => (
-            <motion.article key={chapter.title} className="ledger-entry" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .4 }} transition={{ delay: index * .08 }}>
+            <motion.article key={chapter.title} className="ledger-entry" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15, margin: "0px 0px -10% 0px" }} transition={{ delay: index * .04 }}>
               <span>{chapter.date}</span>
               <div><small>{chapter.label}</small><h3>{chapter.title}</h3></div>
               <p>{chapter.copy}</p>

@@ -9,14 +9,39 @@ const ContactModal = ({ onClose }) => {
   const [receipt, setReceipt] = useState(null);
   const successTimer = useRef();
 
+  const dialogRef = useRef(null);
+
   useEffect(() => {
-    const closeOnEscape = (event) => event.key === "Escape" && onClose();
-    document.addEventListener("keydown", closeOnEscape);
+    const opener = document.activeElement;
+    const FOCUSABLE = 'a[href], button:not([disabled]), input, textarea, [tabindex]:not([tabindex="-1"])';
+
+    // Without a trap, Tab walks straight out of the dialog into the page behind it.
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const items = dialogRef.current?.querySelectorAll(FOCUSABLE);
+      if (!items?.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
     document.body.style.overflow = "hidden";
     return () => {
-      document.removeEventListener("keydown", closeOnEscape);
+      document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
       window.clearTimeout(successTimer.current);
+      if (opener instanceof HTMLElement) opener.focus();
     };
   }, [onClose]);
 
@@ -72,7 +97,7 @@ const ContactModal = ({ onClose }) => {
 
   return (
     <motion.div className="contact-backdrop" role="presentation" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-      <motion.section className="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-title" initial={{ opacity: 0, y: 35, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 25, scale: .97 }} transition={{ type: "spring", damping: 25, stiffness: 280 }}>
+      <motion.section ref={dialogRef} className="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-title" initial={{ opacity: 0, y: 35, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 25, scale: .97 }} transition={{ type: "spring", damping: 25, stiffness: 280 }}>
         <div className="contact-top"><span>Start a conversation</span><button type="button" onClick={onClose} aria-label="Close contact form">×</button></div>
         {status === "sent" ? <motion.div className="contact-success" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
           <motion.div className="success-plane" aria-hidden="true" initial={{ x: -34, y: 22, rotate: -18, opacity: 0 }} animate={{ x: 0, y: 0, rotate: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 230, damping: 18 }}><span>➤</span></motion.div>
