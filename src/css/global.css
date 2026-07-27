@@ -316,7 +316,8 @@ main {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  opacity: 0.82;
+  /* Recedes behind the headline rather than competing with it. */
+  opacity: 0.55;
   /* No mask-image or filter here: this layer repaints every frame, and compositing a
      full-viewport mask on top of that was starving the main thread. */
   transition: opacity 0.5s ease;

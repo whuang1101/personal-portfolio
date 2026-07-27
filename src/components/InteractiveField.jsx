@@ -132,9 +132,16 @@ const InteractiveField = () => {
       context.fill();
     };
 
+    // Roughly half the old frequency and well under half the old amplitude, so the balls
+    // drift through the middle of the hero instead of sweeping its full width.
+    const ballPoint = (time, ball) => ({
+      x: width / 2 + Math.sin(time * (0.00021 + ball * 0.00003) + ball * 2.1) * width * 0.26,
+      y: height / 2 + Math.sin(time * (0.00034 + ball * 0.000025) + ball) * height * 0.2,
+    });
+
     const drawRally = (time) => {
       const pad = Math.max(32, width * 0.045);
-      context.strokeStyle = "rgba(243,240,232,.09)";
+      context.strokeStyle = "rgba(243,240,232,.055)";
       context.lineWidth = 1;
       context.strokeRect(pad, pad, width - pad * 2, height - pad * 2);
       context.beginPath();
@@ -148,19 +155,33 @@ const InteractiveField = () => {
       context.lineTo(width * 0.75, height - pad);
       context.stroke();
 
+      // A continuous stroked path instead of 14 discrete ghost dots, which read as a
+      // stutter rather than a trail.
+      const steps = 26;
+      const spacing = 26;
+      context.lineCap = "round";
+      context.lineJoin = "round";
       for (let ball = 0; ball < 2; ball += 1) {
-        for (let ghost = 13; ghost >= 0; ghost -= 1) {
-          const offsetTime = time - ghost * 18;
-          const x = width / 2 + Math.sin(offsetTime * (0.00046 + ball * 0.00006) + ball * 2.1) * width * 0.42;
-          const y = height / 2 + Math.sin(offsetTime * (0.00089 + ball * 0.00005) + ball) * height * 0.34;
-          const alpha = (1 - ghost / 14) * 0.22;
-          context.beginPath();
-          context.arc(x, y, ghost === 0 ? 3.8 : 1.2, 0, Math.PI * 2);
-          context.fillStyle = ball === 0
-            ? `rgba(255,118,93,${alpha})`
-            : `rgba(199,255,84,${alpha})`;
-          context.fill();
+        const tone = ball === 0 ? "255,118,93" : "199,255,84";
+        const head = ballPoint(time, ball);
+        const tail = ballPoint(time - steps * spacing, ball);
+        context.beginPath();
+        for (let step = steps; step >= 0; step -= 1) {
+          const point = ballPoint(time - step * spacing, ball);
+          if (step === steps) context.moveTo(point.x, point.y);
+          else context.lineTo(point.x, point.y);
         }
+        const gradient = context.createLinearGradient(tail.x, tail.y, head.x, head.y);
+        gradient.addColorStop(0, `rgba(${tone},0)`);
+        gradient.addColorStop(1, `rgba(${tone},.3)`);
+        context.strokeStyle = gradient;
+        context.lineWidth = 1.6;
+        context.stroke();
+
+        context.beginPath();
+        context.arc(head.x, head.y, 2.8, 0, Math.PI * 2);
+        context.fillStyle = `rgba(${tone},.62)`;
+        context.fill();
       }
     };
 
@@ -169,39 +190,49 @@ const InteractiveField = () => {
       const targetX = pointer.active ? pointer.x : rest.x;
       const targetY = pointer.active ? pointer.y : rest.y;
 
-      player.vx += (targetX - player.x) * 0.026;
-      player.vy += (targetY - player.y) * 0.026;
-      player.vx *= 0.91;
-      player.vy *= 0.91;
+      // Spring 0.026 / damping 0.91 overshot the target by 37% and rang — that was the
+      // wobble. Simulated against a step input, 0.24 / 0.50 overshoots 0.7% and settles in
+      // ~0.17s: no perceptible bounce, but still enough lag to draw a trail while moving.
+      player.vx += (targetX - player.x) * 0.24;
+      player.vy += (targetY - player.y) * 0.24;
+      player.vx *= 0.5;
+      player.vy *= 0.5;
       player.x += player.vx;
       player.y += player.vy;
 
       trail.push({ x: player.x, y: player.y });
-      if (trail.length > 54) trail.shift();
+      if (trail.length > 34) trail.shift();
     };
 
     const drawPlayer = (time) => {
       if (trail.length > 2) {
+        // Quadratic curves through the midpoints of consecutive samples, so the trail is
+        // a smooth ribbon rather than a visibly faceted polyline.
         context.beginPath();
-        trail.forEach((point, index) => {
-          if (index === 0) context.moveTo(point.x, point.y);
-          else context.lineTo(point.x, point.y);
-        });
+        context.moveTo(trail[0].x, trail[0].y);
+        for (let index = 1; index < trail.length - 1; index += 1) {
+          const point = trail[index];
+          const next = trail[index + 1];
+          context.quadraticCurveTo(point.x, point.y, (point.x + next.x) / 2, (point.y + next.y) / 2);
+        }
+        context.lineTo(player.x, player.y);
         const trailGradient = context.createLinearGradient(trail[0].x, trail[0].y, player.x, player.y);
         trailGradient.addColorStop(0, "rgba(255,118,93,0)");
-        trailGradient.addColorStop(1, "rgba(255,118,93,.7)");
+        trailGradient.addColorStop(1, "rgba(255,118,93,.55)");
         context.strokeStyle = trailGradient;
-        context.lineWidth = 3.2;
+        context.lineWidth = 2.6;
+        context.lineCap = "round";
+        context.lineJoin = "round";
         context.stroke();
       }
 
-      const pulse = Math.sin(time * 0.006) * 2;
+      const pulse = Math.sin(time * 0.0028) * 1.4;
       context.save();
-      context.shadowColor = "rgba(255,118,93,.85)";
-      context.shadowBlur = 28;
+      context.shadowColor = "rgba(255,118,93,.7)";
+      context.shadowBlur = 16;
       context.beginPath();
-      context.arc(player.x, player.y, 17 + pulse, 0, Math.PI * 2);
-      context.fillStyle = "rgba(255,118,93,.14)";
+      context.arc(player.x, player.y, 15 + pulse, 0, Math.PI * 2);
+      context.fillStyle = "rgba(255,118,93,.11)";
       context.fill();
       context.beginPath();
       context.arc(player.x, player.y, 6, 0, Math.PI * 2);
