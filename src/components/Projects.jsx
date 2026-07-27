@@ -13,6 +13,21 @@ const projects = [
   { title: "Odin Book", type: "Social platform", image: OdinBook, description: "A full-stack social experience with profiles, posts, and authenticated interactions.", stack: ["React", "Node", "MongoDB", "Passport"], demo: "https://lustrous-dodol-b9be51.netlify.app/", code: "https://github.com/whuang1101/OdinBook" },
 ];
 
+const tiltProject = (event) => {
+  const bounds = event.currentTarget.getBoundingClientRect();
+  const x = (event.clientX - bounds.left) / bounds.width;
+  const y = (event.clientY - bounds.top) / bounds.height;
+  event.currentTarget.style.setProperty("--tilt-x", `${(0.5 - y) * 6}deg`);
+  event.currentTarget.style.setProperty("--tilt-y", `${(x - 0.5) * 7}deg`);
+  event.currentTarget.style.setProperty("--spot-x", `${x * 100}%`);
+  event.currentTarget.style.setProperty("--spot-y", `${y * 100}%`);
+};
+
+const resetProjectTilt = (event) => {
+  event.currentTarget.style.setProperty("--tilt-x", "0deg");
+  event.currentTarget.style.setProperty("--tilt-y", "0deg");
+};
+
 const ProjectsPage = () => (
   <section className="section projects-section" id="project">
     <div className="section-kicker"><span>03</span> Selected work / Project journal</div>
@@ -29,7 +44,7 @@ const ProjectsPage = () => (
               <i />{index === projects.length - 1 ? "05" : `${String(index + 1).padStart(2, "0")}–${String(index + 2).padStart(2, "0")}`}
             </span>
           )}
-          <a className="project-visual" href={project.demo} target="_blank" rel="noreferrer" aria-label={`Open live ${project.title} project`}>
+          <a className="project-visual" data-pointer-reactive href={project.demo} target="_blank" rel="noreferrer" aria-label={`Open live ${project.title} project`} onPointerMove={tiltProject} onPointerLeave={resetProjectTilt}>
             <img src={project.image} alt={`${project.title} interface`} loading="lazy" />
             <span>Open live build <b>↗</b></span>
           </a>

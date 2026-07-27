@@ -1,11 +1,28 @@
 import { motion } from "framer-motion";
 import { Link } from "react-scroll";
+import InteractiveField from "./InteractiveField.jsx";
 
 const reveal = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } };
+
+const trackAtlas = (event) => {
+  const bounds = event.currentTarget.getBoundingClientRect();
+  const x = (event.clientX - bounds.left) / bounds.width;
+  const y = (event.clientY - bounds.top) / bounds.height;
+  event.currentTarget.style.setProperty("--atlas-x", `${(x - 0.5) * 14}px`);
+  event.currentTarget.style.setProperty("--atlas-y", `${(y - 0.5) * 11}px`);
+  event.currentTarget.style.setProperty("--atlas-light-x", `${x * 100}%`);
+  event.currentTarget.style.setProperty("--atlas-light-y", `${y * 100}%`);
+};
+
+const resetAtlas = (event) => {
+  event.currentTarget.style.setProperty("--atlas-x", "0px");
+  event.currentTarget.style.setProperty("--atlas-y", "0px");
+};
 
 // eslint-disable-next-line react/prop-types
 const FirstPage = ({ onThemeToggle, cosmicTheme }) => (
   <section className="hero" id="home">
+    <InteractiveField />
     <div className="hero-court" aria-hidden="true"><i /><i /></div>
     <motion.div className="hero-copy" initial="hidden" animate="visible" transition={{ staggerChildren: 0.1 }}>
       <motion.div className="hero-hud" variants={reveal}>
@@ -20,7 +37,7 @@ const FirstPage = ({ onThemeToggle, cosmicTheme }) => (
         <a className="text-link" href="/Wilson-Huang-Resume.pdf" target="_blank" rel="noreferrer">Download résumé <span>↗</span></a>
       </motion.div>
     </motion.div>
-    <motion.aside className="hero-atlas" aria-label="Wilson's engineering route" initial={{ opacity: 0, scale: .96, x: 28 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: .85, delay: .2, ease: [.22, 1, .36, 1] }}>
+    <motion.aside className="hero-atlas" data-pointer-reactive aria-label="Wilson's engineering route" onPointerMove={trackAtlas} onPointerLeave={resetAtlas} initial={{ opacity: 0, scale: .96, x: 28 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: .85, delay: .2, ease: [.22, 1, .36, 1] }}>
       <div className="atlas-head"><span>ROUTE / 01</span><span>LIVE FIELD NOTES</span><b>2025—NOW</b></div>
       <svg className="atlas-map" viewBox="0 0 640 520" role="img" aria-labelledby="route-map-title">
         <title id="route-map-title">A stylized topographic route connecting API, events, cloud, and product engineering</title>

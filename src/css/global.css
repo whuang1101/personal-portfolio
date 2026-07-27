@@ -291,6 +291,97 @@ main {
   gap: clamp(40px, 6vw, 105px);
 }
 
+.interactive-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  opacity: 0.7;
+  filter: saturate(1.08);
+  mask-image: linear-gradient(to bottom, black 0%, black 76%, transparent 100%);
+  transition: opacity 0.35s ease, filter 0.35s ease;
+}
+
+.interactive-field.field-rally {
+  opacity: 0.78;
+}
+
+.interactive-field.field-grid {
+  opacity: 0.66;
+}
+
+.field-mode-dock {
+  position: absolute;
+  right: 3vw;
+  bottom: 22px;
+  z-index: 8;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #8d929a;
+  background: rgba(10, 12, 15, 0.88);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(16px);
+}
+
+.field-mode-dock > span,
+.field-mode-dock > small {
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 400 0.46rem var(--mono);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.field-mode-dock > span i {
+  width: 6px;
+  height: 6px;
+  background: var(--route);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--route);
+  animation: fieldPulse 1.7s ease-in-out infinite;
+}
+
+@keyframes fieldPulse {
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+.field-mode-dock > div {
+  padding: 3px;
+  display: flex;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.035);
+  border-radius: 8px;
+}
+
+.field-mode-dock button {
+  padding: 7px 9px;
+  color: #7e848c;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  font: 500 0.52rem var(--mono);
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.field-mode-dock button:hover {
+  color: var(--paper);
+}
+
+.field-mode-dock button[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--route);
+  box-shadow: 0 0 18px rgba(199, 255, 84, 0.14);
+}
+
 .hero::before {
   content: "";
   position: absolute;
@@ -456,10 +547,26 @@ main {
   box-shadow: 0 45px 100px rgba(0, 0, 0, 0.42);
 }
 
+.hero-atlas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 210px at var(--atlas-light-x, 65%) var(--atlas-light-y, 35%),
+    rgba(199, 255, 84, 0.13),
+    rgba(132, 116, 255, 0.055) 42%,
+    transparent 72%
+  );
+  mix-blend-mode: screen;
+}
+
 .hero-atlas::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 3;
   pointer-events: none;
   background: linear-gradient(112deg, transparent 35%, rgba(255, 255, 255, 0.045) 49%, transparent 62%);
   transform: translateX(-75%);
@@ -489,9 +596,14 @@ main {
 }
 
 .atlas-map {
+  position: relative;
+  z-index: 2;
   width: 100%;
   margin: 10px 0 0;
   overflow: visible;
+  transform: translate3d(var(--atlas-x, 0), var(--atlas-y, 0), 0);
+  transition: transform 0.18s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
 }
 
 .contour-lines path {
@@ -1213,6 +1325,25 @@ main {
   border: 1px solid var(--line);
   border-radius: 20px;
   box-shadow: 0 30px 65px rgba(0, 0, 0, 0.24);
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 0.16s ease-out, box-shadow 0.28s ease;
+  will-change: transform;
+}
+
+.project-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 220px at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(199, 255, 84, 0.16),
+    transparent 68%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
 .project-visual::after {
@@ -1222,6 +1353,15 @@ main {
   background: linear-gradient(to top, rgba(8, 9, 11, 0.68), transparent 55%);
   opacity: 0.45;
   transition: opacity 0.35s;
+}
+
+.project-visual:hover {
+  box-shadow: 0 38px 82px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(199, 255, 84, 0.13);
+}
+
+.project-visual:hover::before,
+.project-visual:focus-visible::before {
+  opacity: 1;
 }
 
 .project-visual img {
@@ -1991,6 +2131,25 @@ main {
     gap: 44px;
   }
 
+  .interactive-field {
+    opacity: 0.5;
+  }
+
+  .field-mode-dock {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    margin-top: -22px;
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    order: 5;
+  }
+
+  .field-mode-dock > small {
+    display: none;
+  }
+
   .hero-hud span:nth-child(2),
   .hero-hud span:nth-child(3) {
     display: none;
@@ -2275,5 +2434,10 @@ main {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .atlas-map,
+  .project-visual {
+    transform: none !important;
   }
 }
