@@ -298,9 +298,9 @@ main {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  opacity: 0.7;
-  filter: saturate(1.08);
-  mask-image: linear-gradient(to bottom, black 0%, black 76%, transparent 100%);
+  opacity: 0.82;
+  filter: saturate(1.12);
+  mask-image: linear-gradient(to bottom, black 0%, black 86%, rgba(0, 0, 0, 0.72) 100%);
   transition: opacity 0.35s ease, filter 0.35s ease;
 }
 
@@ -309,7 +309,111 @@ main {
 }
 
 .interactive-field.field-grid {
-  opacity: 0.66;
+  opacity: 0.72;
+}
+
+.traverse-progress {
+  position: fixed;
+  top: 50%;
+  right: 8px;
+  left: auto;
+  z-index: 24;
+  width: 31px;
+  padding: 9px 6px;
+  color: #838992;
+  background: rgba(9, 11, 14, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(16px);
+  transform: translateY(-50%);
+}
+
+.traverse-readout {
+  display: none;
+  padding-bottom: 10px;
+  gap: 3px;
+  border-bottom: 1px solid var(--line);
+}
+
+.traverse-readout span {
+  color: var(--route);
+  font: 400 0.45rem var(--mono);
+  letter-spacing: 0.08em;
+}
+
+.traverse-readout strong {
+  overflow: hidden;
+  color: var(--paper);
+  font: 500 0.57rem var(--mono);
+  text-overflow: ellipsis;
+}
+
+.traverse-progress nav {
+  position: relative;
+  margin-top: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.traverse-progress nav::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: 9px;
+  width: 1px;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--route) calc(var(--traverse-progress, 0) * 100%),
+      var(--line-strong) calc(var(--traverse-progress, 0) * 100%)
+    );
+  box-shadow: 0 0 8px rgba(199, 255, 84, 0.16);
+}
+
+.traverse-progress button {
+  position: relative;
+  z-index: 1;
+  min-height: 20px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 7px;
+  color: #6f757d;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  font: 400 0.43rem var(--mono);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.traverse-progress button span {
+  display: none;
+}
+
+.traverse-progress button i {
+  width: 7px;
+  height: 7px;
+  justify-self: center;
+  background: #16191e;
+  border: 1px solid #626973;
+  border-radius: 50%;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.traverse-progress button:hover,
+.traverse-progress button[aria-current="step"] {
+  color: var(--paper);
+}
+
+.traverse-progress button[aria-current="step"] i {
+  background: var(--route);
+  border-color: var(--route);
+  box-shadow: 0 0 14px rgba(199, 255, 84, 0.68);
+  transform: scale(1.45);
 }
 
 .field-mode-dock {
@@ -338,6 +442,11 @@ main {
   font: 400 0.46rem var(--mono);
   letter-spacing: 0.08em;
   white-space: nowrap;
+}
+
+.field-mode-dock > small {
+  color: #a9adb4;
+  letter-spacing: 0.03em;
 }
 
 .field-mode-dock > span i {
@@ -750,6 +859,19 @@ main {
 
 .section-kicker span {
   color: var(--route);
+}
+
+.section.route-active .section-kicker {
+  border-color: rgba(199, 255, 84, 0.34);
+}
+
+.section.route-active .section-kicker span {
+  text-shadow: 0 0 18px rgba(199, 255, 84, 0.65);
+}
+
+.section.route-active .section-heading em,
+.site-footer.route-active h2 em {
+  text-shadow: 0 0 32px rgba(199, 255, 84, 0.11);
 }
 
 .section-heading {
@@ -1337,11 +1459,17 @@ main {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: radial-gradient(
-    circle 220px at var(--spot-x, 50%) var(--spot-y, 50%),
-    rgba(199, 255, 84, 0.16),
-    transparent 68%
-  );
+  background:
+    radial-gradient(
+      circle 260px at var(--player-spot-x, -100%) var(--player-spot-y, -100%),
+      rgba(199, 255, 84, 0.26),
+      transparent 68%
+    ),
+    radial-gradient(
+      circle 220px at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgba(199, 255, 84, 0.16),
+      transparent 68%
+    );
   opacity: 0;
   transition: opacity 0.25s ease;
 }
@@ -1360,8 +1488,20 @@ main {
 }
 
 .project-visual:hover::before,
-.project-visual:focus-visible::before {
+.project-visual:focus-visible::before,
+.project-card.is-player-near .project-visual::before {
   opacity: 1;
+}
+
+.project-card.is-player-near .project-visual {
+  border-color: rgba(199, 255, 84, 0.44);
+  box-shadow:
+    0 38px 82px rgba(0, 0, 0, 0.34),
+    0 0 42px rgba(199, 255, 84, 0.12);
+}
+
+.project-card.is-player-near .project-meta h3 {
+  color: var(--route);
 }
 
 .project-visual img {
@@ -2016,6 +2156,54 @@ main {
 }
 
 @media (max-width: 820px) {
+  .traverse-progress {
+    top: auto;
+    right: auto;
+    bottom: 8px;
+    left: 50%;
+    width: auto;
+    height: 31px;
+    padding: 5px 9px;
+    border-radius: 12px;
+    transform: translateX(-50%);
+  }
+
+  .traverse-readout,
+  .traverse-progress button span {
+    display: none;
+  }
+
+  .traverse-progress nav {
+    margin-top: 0;
+    display: flex;
+    gap: 5px;
+  }
+
+  .traverse-progress button {
+    width: 20px;
+    min-height: 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .traverse-progress nav::before {
+    top: 9px;
+    right: 9px;
+    bottom: auto;
+    left: 9px;
+    width: auto;
+    height: 1px;
+    background:
+      linear-gradient(
+        to right,
+        var(--route) calc(var(--traverse-progress, 0) * 100%),
+        var(--line-strong) calc(var(--traverse-progress, 0) * 100%)
+      );
+  }
+
+  .field-mode-dock > small {
+    display: none;
+  }
+
   .nav-actions .resume-nav {
     display: none;
   }
@@ -2132,7 +2320,7 @@ main {
   }
 
   .interactive-field {
-    opacity: 0.5;
+    opacity: 0.68;
   }
 
   .field-mode-dock {
