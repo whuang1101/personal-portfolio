@@ -1,77 +1,102 @@
-import { motion } from "framer-motion";
-import InteractiveField from "./InteractiveField.jsx";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { scrollToSection } from "../lib/sections.js";
+import { lineReveal, lineRevealTransition, useFinePointer, useCursorPosition, useMagnetic } from "../lib/interactions.js";
 
-const reveal = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } };
+// The vermilion gesture drifts on scroll and leans toward the pointer — one big
+// graphic move instead of an ambient background.
+// eslint-disable-next-line react/prop-types
+const HeroGesture = ({ ready }) => {
+  const fine = useFinePointer();
+  const { scrollYProgress } = useScroll();
+  const pointer = useCursorPosition({ stiffness: 90, damping: 24, mass: 1 });
+  const scrollY = useTransform(scrollYProgress, [0, 0.3], [0, -90]);
+  const leanX = useTransform(pointer.x, [0, typeof window === "undefined" ? 1440 : window.innerWidth], [22, -22]);
+  const leanY = useTransform(pointer.y, [0, typeof window === "undefined" ? 900 : window.innerHeight], [16, -16]);
+  const x = useSpring(fine ? leanX : 0, { stiffness: 60, damping: 20 });
+  const y = useSpring(fine ? leanY : 0, { stiffness: 60, damping: 20 });
 
-const trackAtlas = (event) => {
-  const bounds = event.currentTarget.getBoundingClientRect();
-  const x = (event.clientX - bounds.left) / bounds.width;
-  const y = (event.clientY - bounds.top) / bounds.height;
-  event.currentTarget.style.setProperty("--atlas-x", `${(x - 0.5) * 14}px`);
-  event.currentTarget.style.setProperty("--atlas-y", `${(y - 0.5) * 11}px`);
-  event.currentTarget.style.setProperty("--atlas-light-x", `${x * 100}%`);
-  event.currentTarget.style.setProperty("--atlas-light-y", `${y * 100}%`);
-};
-
-const resetAtlas = (event) => {
-  event.currentTarget.style.setProperty("--atlas-x", "0px");
-  event.currentTarget.style.setProperty("--atlas-y", "0px");
+  return (
+    <motion.svg
+      className="hero-gesture"
+      viewBox="0 0 420 640"
+      fill="none"
+      aria-hidden="true"
+      style={{ x, y: scrollY, translateY: y }}
+      initial={{ opacity: 0, scale: .94 }}
+      animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: .94 }}
+      transition={{ duration: 1.1, delay: .25, ease: [.22, 1, .36, 1] }}
+    >
+      <motion.polygon
+        points="60,0 260,0 130,200 330,200 90,540 150,300 0,300"
+        fill="var(--accent)"
+        initial={{ y: -40, opacity: 0 }}
+        animate={ready ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }}
+        transition={{ duration: 1, delay: .35, ease: [.22, 1, .36, 1] }}
+      />
+      <motion.polygon
+        points="250,180 420,180 300,360 420,360 250,620 300,420 210,420"
+        stroke="var(--accent)"
+        strokeWidth="1.5"
+        fill="none"
+        initial={{ y: 40, opacity: 0 }}
+        animate={ready ? { y: 0, opacity: 1 } : { y: 40, opacity: 0 }}
+        transition={{ duration: 1, delay: .5, ease: [.22, 1, .36, 1] }}
+      />
+    </motion.svg>
+  );
 };
 
 // eslint-disable-next-line react/prop-types
-const FirstPage = ({ onThemeToggle, cosmicTheme }) => (
-  <section className="hero" id="home">
-    <InteractiveField />
-    <div className="hero-court" aria-hidden="true"><i /><i /></div>
-    <motion.div className="hero-copy" initial="hidden" animate="visible" transition={{ staggerChildren: 0.1 }}>
-      <motion.div className="hero-hud" variants={reveal}>
-        <span><i className="status-dot" />Current / LinkedIn</span>
-        <span>Focus / APIs · Cloud · Reliability</span>
-        <span>Base / Sunnyvale, CA</span>
-      </motion.div>
-      <motion.h1 variants={reveal}>Engineering reliable systems.<br /><em>Exploring better routes.</em></motion.h1>
-      <motion.p variants={reveal}>I&apos;m Wilson, a software engineer building enterprise APIs, event-driven workflows, and dependable cloud products across Python, React, and Azure.</motion.p>
-      <motion.div className="hero-actions" variants={reveal}>
-        <button className="primary-button" type="button" onClick={() => scrollToSection("#experience")}>Follow the career route <span>↘</span></button>
-        <a className="text-link" href="/Wilson-Huang-Resume.pdf" target="_blank" rel="noreferrer">Download résumé <span>↗</span></a>
-      </motion.div>
-    </motion.div>
-    <motion.aside className="hero-atlas" data-pointer-reactive aria-label="Wilson's engineering route" onPointerMove={trackAtlas} onPointerLeave={resetAtlas} initial={{ opacity: 0, scale: .96, x: 28 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ duration: .85, delay: .2, ease: [.22, 1, .36, 1] }}>
-      <div className="atlas-head"><span>ROUTE / 01</span><span>LIVE FIELD NOTES</span><b>2025—NOW</b></div>
-      <svg className="atlas-map" viewBox="0 0 640 520" role="img" aria-labelledby="route-map-title">
-        <title id="route-map-title">A stylized topographic route connecting API, events, cloud, and product engineering</title>
-        <g className="contour-lines">
-          <path d="M-40 92C63 18 189 36 244 103s121 78 191 18 167-48 246 5" />
-          <path d="M-23 126C70 52 176 71 228 133s132 79 207 20 156-43 228 2" />
-          <path d="M-10 163C70 91 163 105 216 165s135 78 215 23 153-40 221 5" />
-          <path d="M-34 332c98-71 197-56 249 7s127 77 204 17 168-42 239 10" />
-          <path d="M-55 373c111-70 217-50 265 13s125 72 201 17 166-38 244 17" />
-          <path d="M-41 414c103-64 205-46 257 17s124 68 199 14 153-28 226 24" />
-        </g>
-        <path className="route-shadow" d="M92 444C139 392 129 334 198 304s90-85 135-104 96-6 120-61 60-61 95-86" />
-        <motion.path className="route-path" d="M92 444C139 392 129 334 198 304s90-85 135-104 96-6 120-61 60-61 95-86" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.5, delay: .6, ease: "easeInOut" }} />
-        <g className="route-points">
-          <circle cx="92" cy="444" r="7" /><circle cx="198" cy="304" r="7" /><circle cx="333" cy="200" r="7" /><circle cx="453" cy="139" r="7" />
-        </g>
-        <g className="map-labels">
-          <text x="66" y="476">REST / API</text>
-          <text x="158" y="286">EVENTS</text>
-          <text x="294" y="182">AZURE</text>
-          <text x="420" y="119">PRODUCT</text>
-        </g>
-      </svg>
-      <motion.button className="summit-marker" type="button" onClick={onThemeToggle} aria-label="Toggle hidden portfolio theme" title="A hidden route" animate={{ rotate: cosmicTheme ? 360 : 0, scale: cosmicTheme ? [1, 1.08, 1] : 1 }} transition={{ duration: .7 }} whileHover={{ scale: 1.08 }} whileTap={{ scale: .94 }}>
-        <span>&lt;WH /&gt;</span><small>SUMMIT</small>
-      </motion.button>
-      <div className="atlas-foot">
-        <span>ALT 001 / SYSTEMS</span>
-        <p>Biomedical perspective.<br />Engineering discipline.</p>
-        <div><i /><i /><i /><i /></div>
+const FirstPage = ({ onThemeToggle, ready }) => {
+  const cta = useMagnetic();
+
+  return (
+    <section className="hero" id="home">
+      <HeroGesture ready={ready} />
+      <div className="hero-copy">
+        <motion.div className="hero-eyebrow" initial={{ opacity: 0 }} animate={{ opacity: ready ? 1 : 0 }} transition={{ delay: .2 }}>
+          <i className="status-dot" aria-hidden="true" />Software Engineer — LinkedIn
+        </motion.div>
+        <motion.h1 initial="hidden" animate={ready ? "visible" : "hidden"} transition={{ staggerChildren: .08, delayChildren: .1 }}>
+          <span className="line-mask"><motion.span variants={lineReveal} transition={lineRevealTransition}>Engineering</motion.span></span>
+          <span className="line-mask"><motion.span variants={lineReveal} transition={lineRevealTransition}><span className="accent-word">reliable</span> systems</motion.span></span>
+          <span className="line-mask"><motion.span variants={lineReveal} transition={lineRevealTransition}>people build on.</motion.span></span>
+        </motion.h1>
+        <div className="hero-lower">
+          <motion.div className="hero-actions" initial={{ opacity: 0, y: 16 }} animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }} transition={{ delay: .55 }}>
+            <motion.button
+              className="primary-button"
+              type="button"
+              ref={cta.ref}
+              style={{ x: cta.x, y: cta.y }}
+              onClick={() => scrollToSection("#project")}
+            >
+              <span>Selected work</span><span aria-hidden="true">↘</span>
+            </motion.button>
+            <a className="text-link" href="/Wilson-Huang-Resume.pdf" target="_blank" rel="noreferrer">Résumé ↗</a>
+          </motion.div>
+          <motion.p className="hero-sub" initial={{ opacity: 0, y: 16 }} animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }} transition={{ delay: .45 }}>
+            I&apos;m Wilson, a software engineer building enterprise APIs, event-driven workflows, and dependable cloud products across Python, React, and Azure.
+          </motion.p>
+        </div>
+        <motion.div className="hero-facts" initial={{ opacity: 0 }} animate={{ opacity: ready ? 1 : 0 }} transition={{ delay: .65 }}>
+          <span>Current / <b>LinkedIn</b></span>
+          <span>Focus / <b>APIs · Cloud · Reliability</b></span>
+          <span>Base / <b>Sunnyvale, CA</b></span>
+        </motion.div>
       </div>
-    </motion.aside>
-    <div className="scroll-cue"><span>Scroll / Traverse</span><i /></div>
-  </section>
-);
+      <motion.button
+        className="hero-orb"
+        type="button"
+        onClick={onThemeToggle}
+        aria-label="Toggle hidden portfolio theme"
+        title="A hidden signal"
+        whileHover={{ scale: 1.6, rotate: 45 }}
+        whileTap={{ scale: .9 }}
+      />
+      <div className="scroll-cue"><span>Scroll</span><i /></div>
+    </section>
+  );
+};
 
 export default FirstPage;

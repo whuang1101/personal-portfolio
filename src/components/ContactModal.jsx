@@ -97,7 +97,7 @@ const ContactModal = ({ onClose }) => {
 
   return (
     <motion.div className="contact-backdrop" role="presentation" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-      <motion.section ref={dialogRef} className="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-title" initial={{ opacity: 0, y: 35, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 25, scale: .97 }} transition={{ type: "spring", damping: 25, stiffness: 280 }}>
+      <motion.section ref={dialogRef} className="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-title" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16 }} transition={{ duration: .4, ease: [.22, 1, .36, 1] }}>
         <div className="contact-top"><span>Start a conversation</span><button type="button" onClick={onClose} aria-label="Close contact form">×</button></div>
         {status === "sent" ? <motion.div className="contact-success" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}>
           <motion.div className="success-plane" aria-hidden="true" initial={{ x: -34, y: 22, rotate: -18, opacity: 0 }} animate={{ x: 0, y: 0, rotate: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 230, damping: 18 }}><span>➤</span></motion.div>
@@ -109,7 +109,7 @@ const ContactModal = ({ onClose }) => {
           </motion.dl>
           <button type="button" onClick={onClose}>Back to the portfolio <span>↗</span></button>
         </motion.div> : <>
-        <h2 id="contact-title">Have an idea?<br /><em>Let&apos;s talk.</em></h2>
+        <h2 id="contact-title">Have an idea? <span className="accent-word">Let&apos;s</span> talk.</h2>
         <p>Tell me a little about what you&apos;re building and your message will be delivered directly to my inbox.</p>
         <form onSubmit={submit} aria-busy={status === "sending"}>
           <div className="contact-row">
