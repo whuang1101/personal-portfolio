@@ -1,11 +1,11 @@
-// One ordered list of route stops, shared by the header nav, the traverse rail,
-// and the scroll-position hook so they can never disagree with each other.
+// One ordered list of page sections, shared by the header nav and the
+// scroll-position hook so they can never disagree with each other.
 export const SECTIONS = [
-  { id: "home", label: "Start", nav: "Index", selector: "#home" },
+  { id: "home", label: "Start", nav: "Home", selector: "#home" },
   { id: "about", label: "About", nav: "About", selector: "#about" },
   { id: "experience", label: "Experience", nav: "Experience", selector: "#experience" },
   { id: "project", label: "Work", nav: "Work", selector: "#project" },
-  { id: "skills", label: "Toolkit", nav: "Toolkit", selector: "#skills" },
+  { id: "skills", label: "Toolkit", nav: "Skills", selector: "#skills" },
   { id: "contact", label: "Contact", selector: ".site-footer" },
 ];
 

@@ -1,34 +1,51 @@
 import { motion } from "framer-motion";
+import { fadeUp, inView } from "../lib/interactions.js";
 
 const groups = [
-  { number: "01", title: "Languages", featured: "Python · SQL · TypeScript", items: ["JavaScript", "Java", "Swift", "MATLAB"] },
-  { number: "02", title: "Backend & API", featured: "FastAPI · Flask · SQLAlchemy", items: ["Pydantic", "REST", "OpenAPI", "OAuth 2.0", "Node.js"] },
-  { number: "03", title: "Cloud & Data", featured: "Azure · Airflow · Docker", items: ["Azure SQL", "Redis", "Postgres", "MongoDB", "GitHub Actions"] },
-  { number: "04", title: "Product & Practice", featured: "React · System design · TDD", items: ["Distributed systems", "pytest", "RCA", "CI/CD", "Linux"] },
+  { number: "01", title: "Languages", featured: ["Python", "SQL", "TypeScript"], items: ["JavaScript", "Java", "Swift", "MATLAB"] },
+  { number: "02", title: "Backend & API", featured: ["FastAPI", "Flask", "SQLAlchemy"], items: ["Pydantic", "REST", "OpenAPI", "OAuth 2.0", "Node.js"] },
+  { number: "03", title: "Cloud & Data", featured: ["Azure", "Airflow", "Docker"], items: ["Azure SQL", "Redis", "Postgres", "MongoDB", "GitHub Actions"] },
+  { number: "04", title: "Product & Practice", featured: ["React", "System design", "TDD"], items: ["Distributed systems", "pytest", "RCA", "CI/CD", "Linux"] },
 ];
 
 const SkillsPage = () => (
   <section className="section skills-section" id="skills">
-    <div className="section-kicker"><span>04</span> Equipment / Toolkit</div>
+    <motion.div className="section-kicker" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inView}>
+      <span>04 /</span> Skills
+    </motion.div>
     <div className="section-heading">
-      <h2>A toolkit for the<br /><em>whole route.</em></h2>
+      <h2>A toolkit for the <span className="accent-word">whole</span> stack.</h2>
       <p>From the interface through the API and into cloud infrastructure, I work across the system rather than one isolated layer.</p>
     </div>
-    <div className="skill-grid">
+    <div className="skill-groups">
       {groups.map((group, index) => (
-        <motion.article key={group.title} className="skill-panel" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15, margin: "0px 0px -10% 0px" }} transition={{ delay: index * .04 }}>
-          <header><span>{group.number}</span><small>CAPABILITY</small></header>
+        <motion.article
+          key={group.title}
+          className="skill-group"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={inView}
+          transition={{ delay: index * .06 }}
+        >
+          <header><b>{group.number}</b><span>Capability</span></header>
           <h3>{group.title}</h3>
-          <strong>{group.featured}</strong>
-          <div>{group.items.map((item) => <span key={item}>{item}</span>)}</div>
+          <ul className="spec-list">
+            {group.featured.map((item) => <li className="spec-featured" key={item}>{item}</li>)}
+            {group.items.map((item) => <li key={item}>{item}</li>)}
+          </ul>
         </motion.article>
       ))}
     </div>
-    <motion.aside className="ai-workflow" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.15, margin: "0px 0px -10% 0px" }} transition={{ duration: .6 }}>
-      <span className="ai-mark" aria-hidden="true">AI</span>
-      <div className="ai-workflow-title"><small>ASSISTED ENGINEERING</small><strong>Codex + Claude</strong></div>
+    <motion.aside className="ai-workflow" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inView} transition={{ duration: .5 }}>
+      <span className="micro-label">Assisted engineering</span>
+      <h3>Codex + Claude</h3>
       <p>I use Codex and Claude to plan, build, debug, and refine personal projects while keeping architecture and implementation decisions grounded in engineering fundamentals.</p>
-      <div className="ai-workflow-tags"><span>Planning</span><span>Implementation</span><span>Debugging</span><span>Iteration</span></div>
+      <div className="ai-workflow-tags">
+        {["Planning", "Implementation", "Debugging", "Iteration"].map((item) => (
+          <span className="chip-outline" key={item}>{item}</span>
+        ))}
+      </div>
     </motion.aside>
   </section>
 );
