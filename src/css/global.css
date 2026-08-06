@@ -11,7 +11,9 @@
   --paper-raised: #ece8de;
   --ink: #141310;
   --ink-soft: #55524a;
-  --faded: #b9b4a6;
+  /* Secondary spec-list tier. Kept at ~3.2:1 on paper so it reads as
+     de-emphasised, not disabled. */
+  --faded: #8a857a;
   --accent: #ff4d1c;
   --line: #d8d3c6;
 
@@ -222,12 +224,15 @@ img {
   will-change: transform;
 }
 
+/* Difference blending keeps the cursor legible on paper, on the inverted
+   footer, and over photography — and stops the dot from masking button text. */
 .cursor-dot {
   width: 7px;
   height: 7px;
   margin: -3.5px 0 0 -3.5px;
   border-radius: 50%;
-  background: var(--accent);
+  background: #fff;
+  mix-blend-mode: difference;
 }
 
 .cursor-ring {
@@ -236,7 +241,8 @@ img {
   width: 40px;
   height: 40px;
   margin: -20px 0 0 -20px;
-  border: 1px solid var(--ink);
+  border: 1px solid #fff;
+  mix-blend-mode: difference;
   border-radius: 50%;
   font-family: var(--mono);
   font-size: 0.62rem;
@@ -251,16 +257,19 @@ img {
   width: 62px;
   height: 62px;
   margin: -31px 0 0 -31px;
-  background: rgba(20, 19, 16, 0.08);
+  background: rgba(255, 255, 255, 0.14);
 }
 
+/* The pill sits over ink-filled rows and over photography, so it opts out of
+   the blend and carries its own paper fill instead. */
 .cursor-ring.is-view {
   width: 92px;
   height: 92px;
   margin: -46px 0 0 -46px;
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--paper);
+  mix-blend-mode: normal;
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
 }
 
 .cursor-active {
@@ -401,9 +410,9 @@ img {
   content: "";
   position: absolute;
   inset: 0;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  /* Solid, not translucent: the hero gesture passing under a blurred header
+     read as a smudge rather than a deliberate overlap. */
+  background: var(--paper);
 }
 
 .site-header.scrolled {
@@ -606,12 +615,19 @@ img {
 
 .hero-gesture {
   position: absolute;
-  top: 4%;
+  /* Clears the fixed header so the shape never meets the nav band. */
+  top: 104px;
   right: -5%;
-  width: min(27vw, 370px);
-  height: auto;
+  /* Sized so the outline chevron stops short of the intro paragraph. */
+  width: min(23vw, 325px);
   z-index: 0;
   pointer-events: none;
+}
+
+.hero-gesture-art {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .hero-copy {
@@ -619,21 +635,12 @@ img {
   z-index: 1;
 }
 
-.hero-eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-
 .status-dot {
+  display: inline-block;
   width: 7px;
   height: 7px;
+  margin-right: 0.6rem;
+  vertical-align: 1px;
   background: var(--accent);
   animation: pulse 2.4s ease-in-out infinite;
 }
@@ -644,7 +651,7 @@ img {
 }
 
 .hero h1 {
-  margin: 2.2rem 0 0;
+  margin: 0;
   font-size: clamp(3.2rem, 10.5vw, 9rem);
   line-height: 0.92;
   max-width: 16ch;
@@ -673,6 +680,10 @@ img {
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
+  /* Headline line-height is below 1, so the mask would clip descenders.
+     Pad the box and pull the extra height back out of the layout. */
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
 }
 
 .chars-char {
@@ -775,6 +786,7 @@ img {
   padding-top: 1.1rem;
   border-top: 1px solid var(--line);
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem 2.4rem;
   font-family: var(--mono);
@@ -898,6 +910,25 @@ img {
   color: var(--ink-soft);
   max-width: 40ch;
   font-size: 0.98rem;
+}
+
+/* One section breaks the two-column header formula: full-bleed headline with
+   the dek tucked under it, so the rhythm doesn't read as a template. */
+.section-heading.stacked {
+  grid-template-columns: 1fr;
+  gap: 1.6rem;
+  align-items: start;
+}
+
+.section-heading.stacked h2 {
+  font-size: clamp(2.8rem, 7.5vw, 6rem);
+  max-width: 16ch;
+}
+
+.section-heading.stacked p {
+  justify-self: end;
+  text-align: right;
+  max-width: 34ch;
 }
 
 /* ---------- about ---------- */
@@ -1334,6 +1365,8 @@ img {
   margin: -232px 0 0 34px;
   border: 1px solid var(--ink);
   background: var(--paper-raised);
+  /* Lifts the card off whatever screenshot happens to be behind it. */
+  box-shadow: 0 24px 50px -18px rgba(20, 19, 16, .55);
   overflow: hidden;
   pointer-events: none;
 }
@@ -1477,12 +1510,12 @@ img {
   --footer-line: color-mix(in srgb, var(--paper) 22%, transparent);
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: clamp(90px, 16vh, 180px) max(calc(50vw - var(--page) / 2), 4vw) 40px;
+  padding: clamp(64px, 9vh, 110px) max(calc(50vw - var(--page) / 2), 4vw) 40px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 88vh;
-  min-height: 88svh;
+  min-height: 72vh;
+  min-height: 72svh;
   background: var(--ink);
   color: var(--paper);
 }
@@ -1581,6 +1614,7 @@ img {
 
 .local-clock {
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .footer-links {
@@ -1904,10 +1938,36 @@ img {
     padding-top: 128px;
   }
 
+  /* At this width the shape would cut straight through the headline and the
+     intro copy, so it retreats to a faint mark in the upper right. */
   .hero-gesture {
-    top: 8%;
-    width: 62vw;
-    opacity: .3;
+    top: 84px;
+    right: -22%;
+    width: 56vw;
+  }
+
+  .hero-gesture-art {
+    opacity: .12;
+  }
+
+  .section {
+    padding: clamp(56px, 7vh, 96px) 0;
+  }
+
+  .section-heading {
+    margin-bottom: 2.4rem;
+  }
+
+  .section-kicker {
+    margin-bottom: 1.8rem;
+  }
+
+  .project-feature {
+    padding: 2.2rem 0;
+  }
+
+  .site-footer {
+    min-height: 0;
   }
 
   .hero-lower {

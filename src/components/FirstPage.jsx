@@ -16,17 +16,18 @@ const HeroGesture = ({ ready }) => {
   const x = useSpring(fine ? leanX : 0, { stiffness: 60, damping: 20 });
   const y = useSpring(fine ? leanY : 0, { stiffness: 60, damping: 20 });
 
+  // The wrapper owns the entrance opacity so the stylesheet can still dial the
+  // artwork back on small screens; framer's inline opacity would win otherwise.
   return (
-    <motion.svg
+    <motion.div
       className="hero-gesture"
-      viewBox="0 0 420 640"
-      fill="none"
       aria-hidden="true"
       style={{ x, y: scrollY, translateY: y }}
       initial={{ opacity: 0, scale: .94 }}
       animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: .94 }}
       transition={{ duration: 1.1, delay: .25, ease: [.22, 1, .36, 1] }}
     >
+    <svg className="hero-gesture-art" viewBox="0 0 420 640" fill="none">
       <motion.polygon
         points="60,0 260,0 130,200 330,200 90,540 150,300 0,300"
         fill="var(--accent)"
@@ -43,7 +44,8 @@ const HeroGesture = ({ ready }) => {
         animate={ready ? { y: 0, opacity: 1 } : { y: 40, opacity: 0 }}
         transition={{ duration: 1, delay: .5, ease: [.22, 1, .36, 1] }}
       />
-    </motion.svg>
+    </svg>
+    </motion.div>
   );
 };
 
@@ -55,9 +57,6 @@ const FirstPage = ({ onThemeToggle, ready }) => {
     <section className="hero" id="home">
       <HeroGesture ready={ready} />
       <div className="hero-copy">
-        <motion.div className="hero-eyebrow" initial={{ opacity: 0 }} animate={{ opacity: ready ? 1 : 0 }} transition={{ delay: .2 }}>
-          <i className="status-dot" aria-hidden="true" />Software Engineer — LinkedIn
-        </motion.div>
         <motion.h1 initial="hidden" animate={ready ? "visible" : "hidden"}>
           <span className="h1-line"><Chars text="Engineering" delay={.05} /></span>
           <span className="h1-line"><Chars text="reliable" className="accent-word" delay={.22} /> <Chars text="systems" delay={.34} /></span>
@@ -81,7 +80,7 @@ const FirstPage = ({ onThemeToggle, ready }) => {
           </motion.p>
         </div>
         <motion.div className="hero-facts" initial={{ opacity: 0 }} animate={{ opacity: ready ? 1 : 0 }} transition={{ delay: .65 }}>
-          <span>Current / <b>LinkedIn</b></span>
+          <span><i className="status-dot" aria-hidden="true" />Current / <b>LinkedIn</b></span>
           <span>Focus / <b>APIs · Cloud · Reliability</b></span>
           <span>Base / <b>Sunnyvale, CA</b></span>
         </motion.div>

@@ -14,7 +14,7 @@ const SkillsPage = () => (
     <motion.div className="section-kicker" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inView}>
       <span>04 /</span> <Scramble text="Skills" />
     </motion.div>
-    <div className="section-heading">
+    <div className="section-heading stacked">
       <h2>A toolkit for the <span className="accent-word">whole</span> stack.</h2>
       <p>From the interface through the API and into cloud infrastructure, I work across the system rather than one isolated layer.</p>
     </div>
