@@ -2,16 +2,20 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import RiseKeeper from "../photos/risekeeper.jpg";
 import OdinBook from "../photos/odin-book.webp";
+import Lumen from "../photos/lumen.webp";
+import TheJournal from "../photos/the-journal.webp";
+import PixelFinder from "../photos/pixel-finder.webp";
+import KeepInTouch from "../photos/keepintouch.webp";
 import { fadeUp, inView, useCursorPosition, useFinePointer } from "../lib/interactions.js";
 import { ParallaxImage, Scramble } from "./effects.jsx";
 
 const projects = [
   { title: "Odin Book", type: "Social platform", image: OdinBook, description: "A full-stack social experience with profiles, posts, and authenticated interactions.", stack: ["React", "Node", "MongoDB", "Passport"], demo: "https://lustrous-dodol-b9be51.netlify.app/", code: "https://github.com/whuang1101/OdinBook" },
   { title: "RiseKeeper", type: "iOS alarm app", image: RiseKeeper, description: "An iOS alarm app built on AlarmKit system alarms, where a math, memory, or typing mission has to be cleared before the alarm stops — plus strict snooze controls and wake-up checks.", stack: ["Swift", "SwiftUI", "SwiftData", "AlarmKit", "StoreKit 2"], demo: "https://whuang1101.github.io/RiseKeeper/", demoLabel: "Product site" },
-  { title: "Lumen", type: "Modern storefront", description: "An editorial React storefront with live product data, responsive product browsing, detail pages, and a complete client-side shopping bag.", stack: ["React 18", "React Router", "Vite", "Fake Store API"], demo: "https://earnest-ganache-26ee42.netlify.app/", code: "https://github.com/whuang1101/Shopping-Cart" },
-  { title: "The Journal", type: "Full-stack publishing", description: "A responsive publishing platform with public stories and comments, plus JWT-protected tools for creating, editing, and managing posts.", stack: ["React", "Express", "MongoDB", "JWT"], demo: "https://main--euphonious-nougat-ad7d5a.netlify.app/", code: "https://github.com/whuang1101/blog_client" },
-  { title: "Pixel Finder", type: "Interactive game", description: "A visual search game that turns photo tagging into a playful full-stack challenge.", stack: ["React", "Node", "MongoDB"], demo: "https://incandescent-froyo-150a8b.netlify.app/", code: "https://github.com/whuang1101/photo-tagging" },
-  { title: "KeepInTouch", type: "Real-time messenger", description: "A live messaging app designed around fast conversations and connected experiences.", stack: ["React", "Socket.io", "Express", "MongoDB"], demo: "https://mellow-sfogliatella-52d786.netlify.app/", code: "https://github.com/whuang1101/KeepInTouch" },
+  { title: "Lumen", type: "Modern storefront", image: Lumen, description: "An editorial React storefront with live product data, responsive product browsing, detail pages, and a complete client-side shopping bag.", stack: ["React 18", "React Router", "Vite", "Fake Store API"], demo: "https://earnest-ganache-26ee42.netlify.app/", code: "https://github.com/whuang1101/Shopping-Cart" },
+  { title: "The Journal", type: "Full-stack publishing", image: TheJournal, description: "A responsive publishing platform with public stories and comments, plus JWT-protected tools for creating, editing, and managing posts.", stack: ["React", "Express", "MongoDB", "JWT"], demo: "https://main--euphonious-nougat-ad7d5a.netlify.app/", code: "https://github.com/whuang1101/blog_client" },
+  { title: "Pixel Finder", type: "Interactive game", image: PixelFinder, description: "A visual search game that turns photo tagging into a playful full-stack challenge.", stack: ["React", "Node", "MongoDB"], demo: "https://incandescent-froyo-150a8b.netlify.app/", code: "https://github.com/whuang1101/photo-tagging" },
+  { title: "KeepInTouch", type: "Real-time messenger", image: KeepInTouch, description: "A live messaging app designed around fast conversations and connected experiences.", stack: ["React", "Socket.io", "Express", "MongoDB"], demo: "https://mellow-sfogliatella-52d786.netlify.app/", code: "https://github.com/whuang1101/KeepInTouch" },
 ];
 
 // The first two carry the visual weight; the rest read as a typographic index so
