@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import RiseKeeper from "../photos/risekeeper.jpg";
 import OdinBook from "../photos/odin-book.webp";
 import { fadeUp, inView, useCursorPosition, useFinePointer } from "../lib/interactions.js";
+import { ParallaxImage, Scramble } from "./effects.jsx";
 
 const projects = [
   { title: "Odin Book", type: "Social platform", image: OdinBook, description: "A full-stack social experience with profiles, posts, and authenticated interactions.", stack: ["React", "Node", "MongoDB", "Passport"], demo: "https://lustrous-dodol-b9be51.netlify.app/", code: "https://github.com/whuang1101/OdinBook" },
@@ -53,7 +54,7 @@ const ProjectsPage = () => {
   return (
     <section className="section projects-section" id="project">
       <motion.div className="section-kicker" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inView}>
-        <span>03 /</span> Selected work
+        <span>03 /</span> <Scramble text="Selected work" />
       </motion.div>
       <div className="section-heading">
         <h2>Experiments that became <span className="accent-word">working</span> products.</h2>
@@ -72,7 +73,7 @@ const ProjectsPage = () => {
         >
           {/* The image repeats the link below, so it stays out of the tab order. */}
           <a className="project-visual" href={project.demo} target="_blank" rel="noreferrer" tabIndex={-1} aria-hidden="true" data-cursor="view">
-            <img src={project.image} alt="" decoding="async" />
+            <ParallaxImage src={project.image} />
           </a>
           <div className="project-meta">
             <span className="project-num">{String(index + 1).padStart(2, "0")} / 06</span>

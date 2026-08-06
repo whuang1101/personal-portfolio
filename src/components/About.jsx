@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import selfie from "../assets/wilson-headshot.webp";
 import { fadeUp, inView } from "../lib/interactions.js";
+import { ParallaxImage, Scramble } from "./effects.jsx";
 
 const AboutPage = () => (
   <section className="section about-section" id="about">
     <motion.div className="section-kicker" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inView}>
-      <span>01 /</span> About
+      <span>01 /</span> <Scramble text="About" />
     </motion.div>
     <div className="about-grid">
       <motion.div
@@ -16,7 +17,7 @@ const AboutPage = () => (
         transition={{ duration: .9, ease: [.22, 1, .36, 1] }}
       >
         <div className="portrait-frame">
-          <img src={selfie} alt="Wilson Huang" loading="lazy" />
+          <ParallaxImage src={selfie} alt="Wilson Huang" />
         </div>
         <div className="portrait-caption"><span>Fig. 01 — Wilson Huang</span><span>Sunnyvale, CA</span></div>
       </motion.div>

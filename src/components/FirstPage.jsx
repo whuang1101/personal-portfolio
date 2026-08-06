@@ -1,6 +1,7 @@
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { scrollToSection } from "../lib/sections.js";
-import { lineReveal, lineRevealTransition, useFinePointer, useCursorPosition, useMagnetic } from "../lib/interactions.js";
+import { useFinePointer, useCursorPosition, useMagnetic } from "../lib/interactions.js";
+import { Chars } from "./effects.jsx";
 
 // The vermilion gesture drifts on scroll and leans toward the pointer — one big
 // graphic move instead of an ambient background.
@@ -57,10 +58,10 @@ const FirstPage = ({ onThemeToggle, ready }) => {
         <motion.div className="hero-eyebrow" initial={{ opacity: 0 }} animate={{ opacity: ready ? 1 : 0 }} transition={{ delay: .2 }}>
           <i className="status-dot" aria-hidden="true" />Software Engineer — LinkedIn
         </motion.div>
-        <motion.h1 initial="hidden" animate={ready ? "visible" : "hidden"} transition={{ staggerChildren: .08, delayChildren: .1 }}>
-          <span className="line-mask"><motion.span variants={lineReveal} transition={lineRevealTransition}>Engineering</motion.span></span>
-          <span className="line-mask"><motion.span variants={lineReveal} transition={lineRevealTransition}><span className="accent-word">reliable</span> systems</motion.span></span>
-          <span className="line-mask"><motion.span variants={lineReveal} transition={lineRevealTransition}>people build on.</motion.span></span>
+        <motion.h1 initial="hidden" animate={ready ? "visible" : "hidden"}>
+          <span className="h1-line"><Chars text="Engineering" delay={.05} /></span>
+          <span className="h1-line"><Chars text="reliable" className="accent-word" delay={.22} /> <Chars text="systems" delay={.34} /></span>
+          <span className="h1-line"><Chars text="people build on." delay={.45} /></span>
         </motion.h1>
         <div className="hero-lower">
           <motion.div className="hero-actions" initial={{ opacity: 0, y: 16 }} animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }} transition={{ delay: .55 }}>

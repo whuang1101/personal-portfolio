@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { fadeUp, inView } from "../lib/interactions.js";
+import { Scramble } from "./effects.jsx";
 
 const highlights = [
   {
@@ -52,7 +53,7 @@ const earlierChapters = [
 const ExperiencePage = () => (
   <section className="section experience-section" id="experience">
     <motion.div className="section-kicker" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inView}>
-      <span>02 /</span> Experience
+      <span>02 /</span> <Scramble text="Experience" />
     </motion.div>
     <div className="section-heading">
       <h2>Building the systems <span className="accent-word">behind</span> the interface.</h2>

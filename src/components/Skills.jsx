@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { fadeUp, inView } from "../lib/interactions.js";
+import { Scramble } from "./effects.jsx";
 
 const groups = [
   { number: "01", title: "Languages", featured: ["Python", "SQL", "TypeScript"], items: ["JavaScript", "Java", "Swift", "MATLAB"] },
@@ -11,7 +12,7 @@ const groups = [
 const SkillsPage = () => (
   <section className="section skills-section" id="skills">
     <motion.div className="section-kicker" variants={fadeUp} initial="hidden" whileInView="visible" viewport={inView}>
-      <span>04 /</span> Skills
+      <span>04 /</span> <Scramble text="Skills" />
     </motion.div>
     <div className="section-heading">
       <h2>A toolkit for the <span className="accent-word">whole</span> stack.</h2>

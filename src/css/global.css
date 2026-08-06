@@ -36,6 +36,16 @@ html {
   scroll-padding-top: 96px;
 }
 
+/* Lenis drives scrolling when active; native smooth behavior would fight it. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
 body {
   margin: 0;
   background: var(--paper);
@@ -649,6 +659,42 @@ img {
   display: block;
 }
 
+.h1-line {
+  display: block;
+}
+
+/* Per-character reveal plumbing. */
+.chars-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.chars-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.chars-char {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Parallax image frames: the frame clips, the image drifts inside it. */
+.parallax-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.parallax-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .hero-lower {
   display: grid;
   grid-template-columns: 1fr minmax(280px, 380px);
@@ -865,14 +911,12 @@ img {
 
 .portrait-frame {
   position: relative;
+  aspect-ratio: 4 / 5;
   border: 1px solid var(--ink);
   overflow: hidden;
 }
 
 .portrait-frame img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
   filter: grayscale(1) contrast(1.05);
   transition: filter .6s var(--ease);
 }
@@ -1427,9 +1471,20 @@ img {
 
 /* ---------- footer ---------- */
 
+/* Inverted finale: full-bleed ink panel closing the page. */
 .site-footer {
-  padding: clamp(80px, 12vh, 150px) 0 40px;
-  border-top: 1px solid var(--line);
+  --footer-muted: color-mix(in srgb, var(--paper) 55%, transparent);
+  --footer-line: color-mix(in srgb, var(--paper) 22%, transparent);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: clamp(90px, 16vh, 180px) max(calc(50vw - var(--page) / 2), 4vw) 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 88vh;
+  min-height: 88svh;
+  background: var(--ink);
+  color: var(--paper);
 }
 
 .footer-index {
@@ -1437,7 +1492,7 @@ img {
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--footer-muted);
 }
 
 .site-footer h2 {
@@ -1460,13 +1515,18 @@ img {
   align-items: center;
   gap: 0.8rem;
   padding: 1.05rem 2.1rem;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--mono);
   font-size: 0.8rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   overflow: hidden;
+  transition: color .3s var(--ease);
+}
+
+.footer-actions button:hover {
+  color: var(--paper);
 }
 
 .footer-actions button::before {
@@ -1493,7 +1553,7 @@ img {
   font-size: 0.8rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--footer-line);
   padding-bottom: 3px;
   transition: color .25s var(--ease), border-color .25s var(--ease);
 }
@@ -1511,12 +1571,16 @@ img {
   gap: 1rem;
   margin-top: 5rem;
   padding-top: 1.2rem;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--footer-line);
   font-family: var(--mono);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--footer-muted);
+}
+
+.local-clock {
+  font-variant-numeric: tabular-nums;
 }
 
 .footer-links {

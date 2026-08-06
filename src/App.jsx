@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from "framer-motion";
+import { startSmoothScroll } from "./lib/smoothScroll.js";
+import { Chars, LocalClock } from "./components/effects.jsx";
 import Header from "./components/Header.jsx";
 import Cursor from "./components/Cursor.jsx";
 import Intro from "./components/Intro.jsx";
@@ -45,8 +47,15 @@ const App = () => {
     }
   }, []);
   const footerCta = useMagnetic();
-  const { scrollYProgress } = useScroll();
+  const calm = useReducedMotion();
+  const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 220, damping: 40, mass: 0.4 });
+  // Fast scrolling leans the page a fraction of a degree — type feels alive.
+  const velocity = useVelocity(scrollY);
+  const skewRaw = useTransform(velocity, [-1600, 1600], [-1.1, 1.1], { clamp: true });
+  const skew = useSpring(skewRaw, { stiffness: 190, damping: 32 });
+
+  useEffect(() => startSmoothScroll(), []);
 
   const toggleTheme = useCallback(() => {
     setCosmicTheme((current) => {
@@ -106,17 +115,19 @@ const App = () => {
       </AnimatePresence>
       <Header onContact={() => setContactOpen(true)} activeIndex={activeSection} />
       <div className="portfolio-shell">
-        <main id="main-content">
+        <motion.main id="main-content" style={calm ? undefined : { skewY: skew }}>
           <FirstPage onThemeToggle={toggleTheme} ready={!introActive} />
           <Marquee />
           <AboutPage />
           <ExperiencePage />
           <ProjectsPage />
           <SkillsPage />
-        </main>
+        </motion.main>
         <footer className="site-footer">
           <span className="footer-index">05 / Contact</span>
-          <h2>Let&apos;s <span className="accent-word">build</span> something.</h2>
+          <motion.h2 initial="hidden" whileInView="visible" viewport={{ once: true, margin: "0px 0px -20% 0px" }}>
+            <Chars text="Let’s" /> <Chars text="build" className="accent-word" delay={.12} /> <Chars text="something." delay={.2} />
+          </motion.h2>
           <div className="footer-actions">
             <motion.button
               type="button"
@@ -134,7 +145,7 @@ const App = () => {
                 <span className="roll"><span>GitHub ↗</span><span aria-hidden="true">GitHub ↗</span></span>
               </a>
             </nav>
-            <small>© 2026 — Wilson Huang · Sunnyvale, CA</small>
+            <small>© 2026 — Wilson Huang · <LocalClock /></small>
           </div>
         </footer>
       </div>

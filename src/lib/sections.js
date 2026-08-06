@@ -15,8 +15,18 @@ export const prefersReducedMotion = () =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // scroll-padding-top in global.css keeps the target clear of the fixed header.
-export const scrollToSection = (selector) => {
-  document.querySelector(selector)?.scrollIntoView({
+// When Lenis is running, anchor jumps route through it so they share the same
+// inertia curve as wheel scrolling; otherwise fall back to native behavior.
+export const scrollToSection = async (selector) => {
+  const target = document.querySelector(selector);
+  if (!target) return;
+  const { getLenis } = await import("./smoothScroll.js");
+  const lenis = getLenis();
+  if (lenis) {
+    lenis.scrollTo(target, { offset: -90, duration: 1.2 });
+    return;
+  }
+  target.scrollIntoView({
     behavior: prefersReducedMotion() ? "auto" : "smooth",
     block: "start",
   });
