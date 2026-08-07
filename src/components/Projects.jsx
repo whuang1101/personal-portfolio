@@ -61,7 +61,7 @@ const ProjectsPage = () => {
         <span>03 /</span> <Scramble text="Selected work" />
       </motion.div>
       <div className="section-heading">
-        <h2>Experiments that became <span className="accent-word">working</span> products.</h2>
+        <h2>Experiments that became working products.</h2>
         <p>Six independent builds tracing my path from full-stack fundamentals to more considered product engineering.</p>
       </div>
 

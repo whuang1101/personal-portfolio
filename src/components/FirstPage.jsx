@@ -3,8 +3,10 @@ import { scrollToSection } from "../lib/sections.js";
 import { useFinePointer, useCursorPosition, useMagnetic } from "../lib/interactions.js";
 import { Chars } from "./effects.jsx";
 
-// The vermilion gesture drifts on scroll and leans toward the pointer — one big
-// graphic move instead of an ambient background.
+// One graphic move instead of an ambient background: two routes carrying the
+// same traffic — a live path and a standby path that rejoin downstream. The
+// motif is redundancy, which is what the headline actually claims; a lightning
+// bolt would have promised the opposite of reliability.
 // eslint-disable-next-line react/prop-types
 const HeroGesture = ({ ready }) => {
   const fine = useFinePointer();
@@ -27,23 +29,35 @@ const HeroGesture = ({ ready }) => {
       animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: .94 }}
       transition={{ duration: 1.1, delay: .25, ease: [.22, 1, .36, 1] }}
     >
-    <svg className="hero-gesture-art" viewBox="0 0 420 640" fill="none">
-      <motion.polygon
-        points="60,0 260,0 130,200 330,200 90,540 150,300 0,300"
-        fill="var(--accent)"
-        initial={{ y: -40, opacity: 0 }}
-        animate={ready ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }}
-        transition={{ duration: 1, delay: .35, ease: [.22, 1, .36, 1] }}
+    <svg className="hero-gesture-art" viewBox="0 0 380 620" fill="none">
+      {/* live route — runs off the right edge rather than sitting inside the page */}
+      <motion.path
+        d="M46 -20 V150 H196 V340 H96 V486 H392"
+        stroke="var(--accent)"
+        strokeWidth="30"
+        strokeLinecap="butt"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: ready ? 1 : 0 }}
+        transition={{ duration: 1.5, delay: .3, ease: [.22, 1, .36, 1] }}
       />
-      <motion.polygon
-        points="250,180 420,180 300,360 420,360 250,620 300,420 210,420"
+      {/* standby route — same journey, different path */}
+      <motion.path
+        d="M126 -20 V236 H302 V430 H176 V566 H392"
         stroke="var(--accent)"
         strokeWidth="1.5"
-        fill="none"
-        initial={{ y: 40, opacity: 0 }}
-        animate={ready ? { y: 0, opacity: 1 } : { y: 40, opacity: 0 }}
-        transition={{ duration: 1, delay: .5, ease: [.22, 1, .36, 1] }}
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: ready ? 1 : 0 }}
+        transition={{ duration: 1.7, delay: .5, ease: [.22, 1, .36, 1] }}
       />
+      <motion.g
+        initial={{ opacity: 0 }}
+        animate={{ opacity: ready ? 1 : 0 }}
+        transition={{ duration: .6, delay: 1.5 }}
+      >
+        <rect x="296" y="424" width="12" height="12" fill="var(--accent)" />
+        <rect x="170" y="560" width="12" height="12" fill="var(--accent)" />
+        <rect x="120" y="230" width="12" height="12" fill="var(--accent)" />
+      </motion.g>
     </svg>
     </motion.div>
   );

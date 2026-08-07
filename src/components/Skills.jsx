@@ -15,7 +15,7 @@ const SkillsPage = () => (
       <span>04 /</span> <Scramble text="Skills" />
     </motion.div>
     <div className="section-heading stacked">
-      <h2>A toolkit for the <span className="accent-word">whole</span> stack.</h2>
+      <h2>A toolkit for the whole stack.</h2>
       <p>From the interface through the API and into cloud infrastructure, I work across the system rather than one isolated layer.</p>
     </div>
     <div className="skill-groups">

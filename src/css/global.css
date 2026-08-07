@@ -617,9 +617,9 @@ img {
   position: absolute;
   /* Clears the fixed header so the shape never meets the nav band. */
   top: 104px;
-  right: -5%;
-  /* Sized so the outline chevron stops short of the intro paragraph. */
-  width: min(23vw, 325px);
+  /* Cropped by the viewport rather than parked inside it. */
+  right: -3%;
+  width: min(25vw, 340px);
   z-index: 0;
   pointer-events: none;
 }
@@ -1052,6 +1052,15 @@ img {
   border-bottom: 1px solid var(--line);
 }
 
+/* The detail column runs far longer than the label columns, so these ride
+   alongside it instead of leaving the left of the row empty. */
+.exp-when,
+.exp-role {
+  position: sticky;
+  top: 124px;
+  align-self: start;
+}
+
 .exp-when {
   font-family: var(--mono);
   font-size: 0.72rem;
@@ -1188,12 +1197,37 @@ img {
   aspect-ratio: 16 / 10;
 }
 
-.project-visual img {
+/* Six screenshots carry six foreign palettes into a bone/ink/vermilion page,
+   so they sit duotoned by default and return to full colour on hover. */
+.project-visual img,
+.hover-preview img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
-  transition: transform .8s var(--ease);
+  filter: grayscale(1) contrast(1.06);
+  transition: transform .8s var(--ease), filter .55s var(--ease);
+}
+
+.project-visual::after,
+.hover-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--accent);
+  mix-blend-mode: color;
+  opacity: .32;
+  pointer-events: none;
+  transition: opacity .55s var(--ease);
+}
+
+.project-feature:hover .project-visual img {
+  filter: none;
+}
+
+.project-feature:hover .project-visual::after {
+  opacity: 0;
 }
 
 .project-feature:hover .project-visual img {
@@ -2015,6 +2049,11 @@ img {
 
   .exp-detail {
     grid-column: 1;
+  }
+
+  .exp-when,
+  .exp-role {
+    position: static;
   }
 
   .project-feature {

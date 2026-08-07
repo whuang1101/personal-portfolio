@@ -56,7 +56,7 @@ const ExperiencePage = () => (
       <span>02 /</span> <Scramble text="Experience" />
     </motion.div>
     <div className="section-heading">
-      <h2>Building the systems <span className="accent-word">behind</span> the interface.</h2>
+      <h2>Building the systems behind the interface.</h2>
       <p>My primary work is at LinkedIn, where I build enterprise products across APIs, distributed workflows, and Azure infrastructure.</p>
     </div>
 
